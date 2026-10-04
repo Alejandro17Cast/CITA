@@ -1,0 +1,41 @@
+:root {
+  --color-primary: #ec6426;
+  --color-accent: #f8a91f;
+  --color-brown: #632713;
+  --color-cream: #fde3cf;
+  --color-surface: #ffffff;
+
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  color: var(--color-brown);
+  background: var(--color-cream);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Kanit', sans-serif;
+  font-weight: 700;
+}
