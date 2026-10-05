@@ -1,16 +1,44 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
+import { supabase } from '../lib/supabase'
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [message, setMessage] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    setMessage(
-      'El formulario está listo. El acceso se habilitará al conectar Supabase.'
-    )
+    if (loading) return
+
+    const formData = new FormData(event.currentTarget)
+    const email = String(formData.get('email') ?? '').trim()
+    const password = String(formData.get('password') ?? '')
+
+    setMessage('')
+    setLoading(true)
+
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+
+      if (error) {
+        setMessage(
+          error.code === 'invalid_credentials'
+            ? 'El correo o la contraseña son incorrectos.'
+            : error.code === 'email_not_confirmed'
+              ? 'Tu correo todavía no está confirmado.'
+              : 'No se pudo iniciar sesión. Intentá nuevamente.'
+        )
+      }
+    } catch {
+      setMessage('No se pudo conectar. Revisá tu conexión a internet.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -36,6 +64,7 @@ export default function LoginPage() {
               type="email"
               autoComplete="username"
               placeholder="nombre@ejemplo.com"
+              disabled={loading}
               required
             />
           </div>
@@ -50,6 +79,7 @@ export default function LoginPage() {
                 type={showPassword ? 'text' : 'password'}
                 autoComplete="current-password"
                 placeholder="Ingresá tu contraseña"
+                disabled={loading}
                 required
               />
 
@@ -65,8 +95,12 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <button type="submit" className="login__submit">
-            Iniciar sesión
+          <button
+            type="submit"
+            className="login__submit"
+            disabled={loading}
+          >
+            {loading ? 'Ingresando…' : 'Iniciar sesión'}
           </button>
 
           <p className="login__message" role="status">
