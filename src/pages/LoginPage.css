@@ -1,0 +1,424 @@
+.cita-login {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  padding: 48px 24px;
+  font-family: "Poppins", sans-serif;
+  color: var(--color-brown);
+  background:
+    radial-gradient(
+      ellipse at 15% 20%,
+      rgb(248 169 31 / 18%),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 90% 80%,
+      rgb(236 100 38 / 16%),
+      transparent 45%
+    ),
+    #fff5ec;
+}
+
+.cita-login__fondo-hojas {
+  position: absolute;
+  z-index: -1;
+  width: 360px;
+  height: 540px;
+  color: #bf794b;
+  opacity: 0.14;
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+.cita-login__fondo-hojas--izquierda {
+  top: -160px;
+  left: -100px;
+  transform: rotate(38deg);
+}
+
+.cita-login__fondo-hojas--derecha {
+  right: -100px;
+  bottom: -150px;
+  transform: rotate(-135deg);
+}
+
+.cita-login__card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  max-width: 1050px;
+  min-height: 640px;
+  overflow: hidden;
+  background: white;
+  border: 1px solid rgb(99 39 19 / 8%);
+  border-radius: 38px;
+  box-shadow:
+    0 30px 90px rgb(99 39 19 / 12%),
+    0 8px 24px rgb(99 39 19 / 5%);
+}
+
+.cita-login__contenido {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px 56px;
+}
+
+.cita-login__marca {
+  margin-bottom: 46px;
+}
+
+.cita-login__marca > span {
+  font-family: "Kanit", sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-primary);
+}
+
+.cita-login__marca p {
+  margin: 6px 0 0;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  color: #93715f;
+}
+
+.cita-login__eyebrow {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #a7745b;
+}
+
+.cita-login__heading h1 {
+  margin: 10px 0;
+  font-family: "Kanit", sans-serif;
+  font-size: clamp(30px, 4vw, 40px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+}
+
+.cita-login__heading p {
+  max-width: 320px;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.8;
+  color: #8b7164;
+}
+
+.cita-login__form {
+  display: grid;
+  gap: 22px;
+  margin-top: 30px;
+}
+
+.cita-login__field {
+  display: grid;
+  gap: 9px;
+}
+
+.cita-login__field label {
+  padding-left: 8px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.cita-login__field input {
+  width: 100%;
+  min-width: 0;
+  min-height: 52px;
+  padding: 14px 19px;
+  font: inherit;
+  font-size: 12px;
+  color: var(--color-brown);
+  background: #fffcfa;
+  border: 1px solid #dfc9bc;
+  border-radius: 999px;
+}
+
+.cita-login__field input::placeholder {
+  color: #9c8275;
+}
+
+.cita-login__password {
+  position: relative;
+}
+
+.cita-login__password input {
+  padding-right: 86px;
+}
+
+.cita-login__toggle {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  padding: 7px;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 500;
+  color: #93614d;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cita-login__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 52px;
+  margin-top: 4px;
+  padding: 14px 20px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  background: var(--color-primary);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: 0 8px 18px rgb(236 100 38 / 20%);
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.cita-login__submit span {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.cita-login__submit:hover:not(:disabled) {
+  background: #d9551c;
+  transform: translateY(-1px);
+}
+
+.cita-login button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.cita-login input:disabled {
+  opacity: 0.7;
+}
+
+.cita-login input:focus-visible,
+.cita-login button:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.cita-login__message {
+  margin: 0;
+  padding: 12px 15px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--color-brown);
+  background: #fff0e4;
+  border-radius: 14px;
+}
+
+.cita-login__message:empty {
+  display: none;
+}
+
+.cita-login__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+  font-size: 9px;
+  line-height: 1.7;
+  text-align: center;
+  color: #947968;
+}
+
+.cita-login__footer span {
+  font-size: 18px;
+  color: var(--color-accent);
+}
+
+/* Panel del isotipo */
+
+.cita-login__visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 48px 35px 48px 65px;
+  background:
+    radial-gradient(
+      circle at 85% 15%,
+      rgb(248 169 31 / 25%),
+      transparent 45%
+    ),
+    linear-gradient(145deg, #fff0e3, #f5c8a8);
+}
+
+.cita-login__curvas {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  width: 110px;
+  height: 100%;
+  filter: drop-shadow(8px 0 8px rgb(99 39 19 / 7%));
+  pointer-events: none;
+}
+
+.cita-login__identidad {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  text-align: center;
+}
+
+.cita-login__logo {
+  width: 240px;
+  max-width: 90%;
+  margin: 0 auto;
+  mix-blend-mode: multiply;
+}
+
+.cita-login__isotipo {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.cita-login__identidad h2 {
+  margin: 12px 0 4px;
+  font-family: "Kanit", sans-serif;
+  font-size: 58px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -2px;
+  color: var(--color-brown);
+}
+
+.cita-login__identidad p {
+  max-width: 250px;
+  margin: 12px auto 0;
+  font-size: 12px;
+  line-height: 1.8;
+  color: #80523c;
+}
+
+.cita-login__quinta {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 9px 18px;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--color-brown);
+  border: 1px solid rgb(99 39 19 / 18%);
+  border-radius: 999px;
+}
+
+.cita-login__hojas {
+  position: absolute;
+  width: 220px;
+  height: 330px;
+  color: #a85930;
+  opacity: 0.13;
+  pointer-events: none;
+}
+
+.cita-login__hojas--arriba {
+  top: -145px;
+  right: -50px;
+  transform: rotate(-40deg);
+}
+
+.cita-login__hojas--abajo {
+  bottom: -130px;
+  right: -25px;
+  transform: rotate(-145deg);
+}
+
+/* Celular */
+
+@media (max-width: 760px) {
+  .cita-login {
+    padding: 24px 16px;
+  }
+
+  .cita-login__card {
+    grid-template-columns: 1fr;
+    max-width: 460px;
+    min-height: auto;
+    border-radius: 28px;
+  }
+
+  .cita-login__visual {
+    grid-row: 1;
+    padding: 28px 24px;
+  }
+
+  .cita-login__curvas {
+    display: none;
+  }
+
+  .cita-login__logo {
+    width: 90px;
+  }
+
+  .cita-login__identidad h2 {
+    margin-top: 8px;
+    font-size: 32px;
+    letter-spacing: -1px;
+  }
+
+  .cita-login__identidad p {
+    max-width: 260px;
+    margin-top: 8px;
+    font-size: 10px;
+  }
+
+  .cita-login__quinta {
+    margin-top: 12px;
+    padding: 6px 12px;
+    font-size: 8px;
+  }
+
+  .cita-login__contenido {
+    padding: 30px 28px;
+  }
+
+  .cita-login__marca {
+    display: none;
+  }
+
+  .cita-login__heading h1 {
+    font-size: 30px;
+  }
+
+  .cita-login__form {
+    margin-top: 24px;
+    gap: 18px;
+  }
+
+  .cita-login__footer {
+    margin-top: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cita-login__submit {
+    transition: none;
+  }
+}
