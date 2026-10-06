@@ -1,14 +1,27 @@
 import { useEffect, useState } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import LoginPage from './pages/LoginPage'
+import DashboardPage from './pages/DashboardPage'
 import { supabase } from './lib/supabase'
 import './App.css'
+
+type Perfil = {
+  nombre: string
+  rol: 'administrador' | 'encargado'
+  activo: boolean
+}
 
 function App() {
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
   const [signingOut, setSigningOut] = useState(false)
   const [message, setMessage] = useState('')
+  const [perfil, setPerfil] = useState<Perfil | null>(null)
+  const [perfilUserId, setPerfilUserId] = useState<string | null>(null)
+  const [perfilError, setPerfilError] = useState('')
+  const [retry, setRetry] = useState(0)
+
+  const userId = session?.user.id
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange(
@@ -19,10 +32,52 @@ function App() {
       }
     )
 
-    return () => {
-      data.subscription.unsubscribe()
-    }
+    return () => data.subscription.unsubscribe()
   }, [])
+
+  useEffect(() => {
+    if (!userId) return
+    let cancelled = false
+
+    async function loadPerfil() {
+      try {
+        const { data, error } = await supabase
+          .from('perfiles')
+          .select('nombre, rol, activo')
+          .eq('id', userId)
+          .single()
+
+        if (cancelled) return
+
+        if (error || !data) {
+          setPerfil(null)
+          setPerfilError('No se pudo cargar tu perfil.')
+        } else if (
+          data.rol !== 'administrador' &&
+          data.rol !== 'encargado'
+        ) {
+          setPerfil(null)
+          setPerfilError('Tu perfil no tiene un rol válido.')
+        } else {
+          setPerfil({
+            nombre: data.nombre,
+            rol: data.rol,
+            activo: data.activo,
+          })
+          setPerfilError('')
+        }
+      } catch {
+        if (cancelled) return
+        setPerfil(null)
+        setPerfilError('No se pudo conectar para consultar tu perfil.')
+      }
+
+      if (!cancelled) setPerfilUserId(userId ?? null)
+    }
+
+    void loadPerfil()
+    return () => { cancelled = true }
+  }, [userId, retry])
 
   async function handleSignOut() {
     setSigningOut(true)
@@ -33,6 +88,10 @@ function App() {
 
       if (error) {
         setMessage('No se pudo cerrar sesión. Intentá nuevamente.')
+      } else {
+        setPerfil(null)
+        setPerfilUserId(null)
+        setPerfilError('')
       }
     } catch {
       setMessage('No se pudo conectar para cerrar sesión.')
@@ -41,30 +100,61 @@ function App() {
     }
   }
 
-  if (loading) {
-    return (
-      <main className="login">
-        <p role="status">Cargando CITA…</p>
-      </main>
-    )
+  function retryPerfil() {
+    setPerfilUserId(null)
+    setPerfilError('')
+    setRetry((value) => value + 1)
   }
 
-  if (!session) {
-    return <LoginPage />
+  if (loading) {
+    return <main className="login"><p role="status">Cargando CITA…</p></main>
+  }
+
+  if (!session) return <LoginPage />
+
+  const perfilLoading = perfilUserId !== userId
+
+  if (!perfilLoading && !perfilError && perfil?.activo) {
+    return (
+      <DashboardPage
+        nombre={perfil.nombre}
+        rol={perfil.rol}
+        signingOut={signingOut}
+        message={message}
+        onSignOut={handleSignOut}
+      />
+    )
   }
 
   return (
     <main className="login">
       <section className="login__card">
         <header className="login__brand">
-          <span className="login__location">QUINTA ANFUSO</span>
           <h1>CITA</h1>
-          <p>Control Inteligente de Tiempos y Agendamiento</p>
+          <p>Quinta Anfuso</p>
         </header>
 
         <div className="login__heading">
-          <h2>Bienvenido a CITA</h2>
-          <p>Ingresaste con {session.user.email}.</p>
+          {perfilLoading ? (
+            <p role="status">Cargando tu perfil…</p>
+          ) : perfilError ? (
+            <>
+              <h2>No pudimos cargar tu perfil</h2>
+              <p role="alert">{perfilError}</p>
+              <button
+                type="button"
+                className="login__toggle"
+                onClick={retryPerfil}
+              >
+                Intentar nuevamente
+              </button>
+            </>
+          ) : (
+            <>
+              <h2>Cuenta desactivada</h2>
+              <p>Contactá al administrador para recuperar el acceso.</p>
+            </>
+          )}
         </div>
 
         <button
@@ -76,9 +166,7 @@ function App() {
           {signingOut ? 'Cerrando sesión…' : 'Cerrar sesión'}
         </button>
 
-        <p className="login__message" role="status">
-          {message}
-        </p>
+        <p className="login__message" role="status">{message}</p>
       </section>
     </main>
   )
