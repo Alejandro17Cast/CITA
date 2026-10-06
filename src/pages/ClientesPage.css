@@ -1,0 +1,309 @@
+.clientes {
+  min-height: 100vh;
+  padding: 32px clamp(20px, 5vw, 64px);
+  background: #fff8f2;
+}
+
+.clientes__header,
+.clientes__list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.clientes__header {
+  margin-bottom: 28px;
+}
+
+.clientes__eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.clientes h1 {
+  margin: 8px 0;
+  font-size: 36px;
+}
+
+.clientes h2 {
+  margin: 0 0 20px;
+  font-size: 24px;
+}
+
+.clientes p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.clientes__panel {
+  padding: 28px;
+  margin-bottom: 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-cream);
+  border-radius: 18px;
+}
+
+.clientes fieldset {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.clientes__fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.clientes label {
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.clientes__wide {
+  grid-column: 1 / -1;
+}
+
+.clientes input,
+.clientes textarea {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 14px;
+  color: var(--color-brown);
+  background: #fffaf6;
+  border: 1px solid #dac1b4;
+  border-radius: 10px;
+}
+
+.clientes textarea {
+  resize: vertical;
+}
+
+.clientes button {
+  padding: 12px 18px;
+  color: var(--color-brown);
+  background: white;
+  border: 1px solid #dac1b4;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.clientes .clientes__primary {
+  margin-top: 24px;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  font-weight: 600;
+}
+
+.clientes button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.clientes input:focus-visible,
+.clientes textarea:focus-visible,
+.clientes button:focus-visible {
+  outline: 3px solid var(--color-brown);
+  outline-offset: 3px;
+}
+
+.clientes__search {
+  max-width: 480px;
+  margin: 12px 0 24px;
+}
+
+.clientes__table-wrapper {
+  overflow-x: auto;
+}
+
+.clientes table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.clientes caption {
+  text-align: left;
+  padding-bottom: 12px;
+}
+
+.clientes th,
+.clientes td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-cream);
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.clientes th {
+  background: #fff8f2;
+}
+
+@media (max-width: 600px) {
+  .clientes__fields {
+    grid-template-columns: 1fr;
+  }
+
+  .clientes__panel {
+    padding: 20px;
+  }
+}
+.clientes select {
+  width: 100%;
+  min-width: 0;
+  padding: 12px 14px;
+  color: var(--color-brown);
+  background: #fffaf6;
+  border: 1px solid #dac1b4;
+  border-radius: 10px;
+}
+
+.clientes select:focus-visible {
+  outline: 3px solid var(--color-brown);
+  outline-offset: 3px;
+}
+.clientes .reservas__check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.clientes .reservas__check input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: var(--color-brown);
+}
+
+.reservas__espacio {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--color-cream);
+  border-radius: 12px;
+}
+.cancelaciones {
+  padding: 0 28px 28px;
+  background: #f6eee7;
+  color: var(--color-brown);
+}
+
+.cancelaciones h2 {
+  font-size: 24px;
+}
+
+.cancelaciones p {
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.cancelaciones fieldset {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.cancelaciones label {
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.cancelaciones select,
+.cancelaciones textarea {
+  width: 100%;
+  padding: 12px 14px;
+  color: var(--color-brown);
+  background: #fffaf6;
+  border: 1px solid #dac1b4;
+  border-radius: 10px;
+}
+
+.cancelaciones textarea {
+  resize: vertical;
+}
+
+.cancelaciones button {
+  padding: 12px 18px;
+  color: var(--color-brown);
+  background: white;
+  border: 1px solid #dac1b4;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.cancelaciones .clientes__primary {
+  background: var(--color-primary);
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+.cancelaciones .cancelaciones__confirmacion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cancelaciones__confirmacion input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: var(--color-brown);
+}
+
+.cancelaciones button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.cancelaciones select:focus-visible,
+.cancelaciones textarea:focus-visible,
+.cancelaciones input:focus-visible,
+.cancelaciones button:focus-visible {
+  outline: 3px solid var(--color-brown);
+  outline-offset: 3px;
+}
+
+.cancelaciones .clientes__table-wrapper {
+  overflow-x: auto;
+}
+
+@media (max-width: 800px) {
+  .cancelaciones {
+    padding: 0 16px 20px;
+  }
+}.cancelaciones input[type="number"] {
+  width: 100%;
+  padding: 12px 14px;
+  color: var(--color-brown);
+  background: #fffaf6;
+  border: 1px solid #dac1b4;
+  border-radius: 10px;
+}
+
+.cancelaciones input[type="number"]:focus-visible {
+  outline: 3px solid var(--color-brown);
+  outline-offset: 3px;
+}
+
+.reembolso__resumen {
+  padding: 16px 20px;
+  margin: 20px 0;
+  background: var(--color-cream);
+  border-radius: 12px;
+}
+
+.reembolso__resumen p {
+  margin: 6px 0;
+}
