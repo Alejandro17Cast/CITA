@@ -1,0 +1,139 @@
+.finanzas {
+  margin-bottom: 24px;
+  color: var(--color-brown);
+}
+
+.finanzas__heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.finanzas h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+.finanzas p {
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.finanzas__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.finanzas__cards article,
+.finanzas__panel {
+  padding: 22px;
+  background: white;
+  border: 1px solid #eddfd5;
+  border-radius: 20px;
+}
+
+.finanzas__cards h4 {
+  margin: 0 0 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.finanzas__cards strong {
+  display: block;
+  font-size: 25px;
+  overflow-wrap: anywhere;
+}
+
+.finanzas__cards .finanzas__neto {
+  background: var(--color-brown);
+  color: white;
+}
+
+.finanzas__panel {
+  margin-top: 22px;
+}
+
+.finanzas fieldset {
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  border: none;
+}
+
+.finanzas label {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0;
+  font-size: 13px;
+}
+
+.finanzas input,
+.finanzas select {
+  width: 100%;
+  padding: 12px;
+  background: #fffaf6;
+  color: var(--color-brown);
+  border: 1px solid #dac1b4;
+  border-radius: 10px;
+}
+
+.finanzas button {
+  padding: 10px 16px;
+  color: var(--color-brown);
+  background: var(--color-cream);
+  border: 1px solid #dac1b4;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.finanzas button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.finanzas .finanzas__check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.finanzas__check input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.finanzas input:focus-visible,
+.finanzas select:focus-visible,
+.finanzas button:focus-visible {
+  outline: 3px solid var(--color-brown);
+  outline-offset: 3px;
+}
+
+.finanzas__table {
+  overflow-x: auto;
+}
+
+.finanzas table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.finanzas th,
+.finanzas td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-cream);
+}
+
+.finanzas caption {
+  text-align: left;
+  padding: 12px 0;
+  font-size: 11px;
+}
