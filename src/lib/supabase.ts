@@ -10,7 +10,21 @@ if (!supabaseUrl || !supabasePublishableKey) {
   )
 }
 
+// Sesión habitual de CITA.
 export const supabase = createClient(
   supabaseUrl,
   supabasePublishableKey
 )
+
+// Sesión independiente para validar una invitación.
+// No lee ni guarda la sesión del administrador.
+export function crearClienteInvitacion() {
+  return createClient(supabaseUrl, supabasePublishableKey, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+      storageKey: 'cita-invitacion',
+    },
+  })
+}
