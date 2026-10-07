@@ -307,3 +307,38 @@
 .reembolso__resumen p {
   margin: 6px 0;
 }
+.reportes__resumen {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.reportes__resumen article {
+  min-width: 0;
+  padding: 22px;
+  background: #fff7ef;
+  border: 1px solid #ecd5c5;
+  border-radius: 20px;
+}
+
+.reportes__resumen h3 {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #93614d;
+}
+
+.reportes__resumen strong {
+  display: block;
+  overflow-wrap: anywhere;
+  font-family: "Kanit", sans-serif;
+  font-size: 28px;
+  color: var(--color-brown);
+}
+
+@media (max-width: 700px) {
+  .reportes__resumen {
+    grid-template-columns: 1fr;
+  }
+}
