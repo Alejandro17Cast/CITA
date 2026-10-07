@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
+import EstablecerContrasenaPage from './pages/EstablecerContrasenaPage'
 import { supabase } from './lib/supabase'
 import './App.css'
 
@@ -9,6 +10,25 @@ type Perfil = {
   nombre: string
   rol: 'administrador' | 'encargado'
   activo: boolean
+}
+
+function solicitaContrasena() {
+  const url = new URL(window.location.href)
+  const hash = new URLSearchParams(url.hash.slice(1))
+  const tipo = hash.get('type')
+
+  return (
+    url.searchParams.get('establecer-contrasena') === '1' ||
+    tipo === 'invite' ||
+    tipo === 'recovery'
+  )
+}
+
+function limpiarEnlace() {
+  const url = new URL(window.location.href)
+  url.searchParams.delete('establecer-contrasena')
+  url.hash = ''
+  window.history.replaceState(null, '', `${url.pathname}${url.search}`)
 }
 
 function App() {
@@ -20,15 +40,27 @@ function App() {
   const [perfilUserId, setPerfilUserId] = useState<string | null>(null)
   const [perfilError, setPerfilError] = useState('')
   const [retry, setRetry] = useState(0)
+  const [establecerContrasena, setEstablecerContrasena] =
+    useState(solicitaContrasena)
 
   const userId = session?.user.id
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange(
-      (_event, currentSession) => {
+      (event, currentSession) => {
         setSession(currentSession)
         setLoading(false)
         setMessage('')
+
+        if (event === 'PASSWORD_RECOVERY') {
+          setEstablecerContrasena(true)
+        }
+
+        if (event === 'SIGNED_OUT') {
+          setPerfil(null)
+          setPerfilUserId(null)
+          setPerfilError('')
+        }
       }
     )
 
@@ -68,6 +100,7 @@ function App() {
         }
       } catch {
         if (cancelled) return
+
         setPerfil(null)
         setPerfilError('No se pudo conectar para consultar tu perfil.')
       }
@@ -76,10 +109,15 @@ function App() {
     }
 
     void loadPerfil()
-    return () => { cancelled = true }
+
+    return () => {
+      cancelled = true
+    }
   }, [userId, retry])
 
   async function handleSignOut() {
+    if (signingOut) return
+
     setSigningOut(true)
     setMessage('')
 
@@ -89,9 +127,12 @@ function App() {
       if (error) {
         setMessage('No se pudo cerrar sesión. Intentá nuevamente.')
       } else {
+        setSession(null)
         setPerfil(null)
         setPerfilUserId(null)
         setPerfilError('')
+        setEstablecerContrasena(false)
+        limpiarEnlace()
       }
     } catch {
       setMessage('No se pudo conectar para cerrar sesión.')
@@ -106,15 +147,69 @@ function App() {
     setRetry((value) => value + 1)
   }
 
-  if (loading) {
-    return <main className="login"><p role="status">Cargando CITA…</p></main>
+  function completarContrasena() {
+    limpiarEnlace()
+    setEstablecerContrasena(false)
+    retryPerfil()
   }
 
-  if (!session) return <LoginPage />
+  if (loading) {
+    return (
+      <main className="login">
+        <p role="status">Cargando CITA…</p>
+      </main>
+    )
+  }
+  if (establecerContrasena) {
+  return (
+    <>
+      <EstablecerContrasenaPage
+        tieneSesion={false}
+        onComplete={() => void handleSignOut()}
+        onCancel={() => void handleSignOut()}
+      />
+
+      {message && <p role="alert">{message}</p>}
+    </>
+  )
+}
+
+  if (!session) {
+    if (establecerContrasena) {
+      return (
+        <EstablecerContrasenaPage
+          tieneSesion={false}
+          onComplete={completarContrasena}
+          onCancel={() => {
+            limpiarEnlace()
+            setEstablecerContrasena(false)
+          }}
+        />
+      )
+    }
+
+    return <LoginPage />
+  }
 
   const perfilLoading = perfilUserId !== userId
 
   if (!perfilLoading && !perfilError && perfil?.activo) {
+    if (establecerContrasena) {
+      return (
+        <>
+          <EstablecerContrasenaPage
+            tieneSesion
+            onComplete={completarContrasena}
+            onCancel={() => {
+              void handleSignOut()
+            }}
+          />
+
+          {message && <p role="alert">{message}</p>}
+        </>
+      )
+    }
+
     return (
       <DashboardPage
         nombre={perfil.nombre}
@@ -166,7 +261,9 @@ function App() {
           {signingOut ? 'Cerrando sesión…' : 'Cerrar sesión'}
         </button>
 
-        <p className="login__message" role="status">{message}</p>
+        <p className="login__message" role="status">
+          {message}
+        </p>
       </section>
     </main>
   )

@@ -7,6 +7,9 @@ import CalendarioPage from './CalendarioPage'
 import FinanzasPanel from './FinanzasPanel'
 import { supabase } from '../lib/supabase'
 import MantenimientosPage from './MantenimientosPage'
+import Sidebar from './Sidebar'
+import ReportesPage from './ReportesPage'
+import UsuariosPage from './UsuariosPage'
 import './DashboardPage.css'
 
 type Props = {
@@ -25,7 +28,8 @@ type Page =
   | 'pagos'
   | 'calendario'
   | 'mantenimientos'
-
+  | 'reportes'
+  | 'usuarios'
 type Reserva = {
   id: string
   nombre_evento: string
@@ -279,7 +283,10 @@ export default function DashboardPage({
     { nombre: 'Pagos y abonos', pagina: 'pagos' },
     { nombre: 'Mantenimientos', pagina: 'mantenimientos' },
     ...(rol === 'administrador'
-      ? [{ nombre: 'Reportes' }, { nombre: 'Usuarios' }]
+      ? [
+    { nombre: 'Reportes', pagina: 'reportes' as Page },
+    { nombre: 'Usuarios', pagina: 'usuarios' as Page },
+  ]
       : []),
   ]
 
@@ -314,57 +321,15 @@ export default function DashboardPage({
 
   return (
     <div className="dashboard">
-      <aside className="dashboard__sidebar">
-        <div className="dashboard__brand">
-          <h1>CITA</h1>
-          <p>Quinta Anfuso</p>
-        </div>
-
-        <nav aria-label="Menú principal">
-          {modulos.map((modulo) => (
-            <button
-              key={modulo.nombre}
-              type="button"
-              disabled={!modulo.pagina}
-              className={
-                page === modulo.pagina
-                  ? 'dashboard__nav-item dashboard__nav-item--active'
-                  : 'dashboard__nav-item'
-              }
-              aria-current={
-                page === modulo.pagina ? 'page' : undefined
-              }
-              onClick={() => {
-                if (modulo.pagina) navegar(modulo.pagina)
-              }}
-            >
-              {modulo.nombre}
-            </button>
-          ))}
-        </nav>
-
-        <div className="dashboard__account">
-          <span className="dashboard__avatar" aria-hidden="true">
-            {nombre.trim().charAt(0) || 'U'}
-          </span>
-
-          <div>
-            <strong>{nombre || 'Usuario'}</strong>
-            <small>
-              {rol === 'administrador' ? 'Administrador' : 'Encargado'}
-            </small>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          className="dashboard__logout"
-          disabled={signingOut}
-          onClick={onSignOut}
-        >
-          {signingOut ? 'Cerrando sesión…' : 'Cerrar sesión'}
-        </button>
-      </aside>
+      <Sidebar
+  modulos={modulos}
+  paginaActual={page}
+  nombre={nombre}
+  rol={rol}
+  signingOut={signingOut}
+  onNavigate={navegar}
+  onSignOut={onSignOut}
+/>
 
       <div className="dashboard__workspace">
         {message && (
@@ -394,6 +359,12 @@ export default function DashboardPage({
             )}
           </>
         )}
+        {page === 'reportes' && rol === 'administrador' && (
+  <ReportesPage onBack={volver} />
+)}
+{page === 'usuarios' && rol === 'administrador' && (
+  <UsuariosPage onBack={volver} />
+)}
 {page === 'mantenimientos' && (
   <MantenimientosPage rol={rol} onBack={volver} />
 )}
