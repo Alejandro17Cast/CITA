@@ -1,0 +1,427 @@
+.cita-sidebar {
+  position: sticky;
+  top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  width: 260px;
+  height: calc(100dvh - 48px);
+  min-height: 480px;
+  padding: 24px 14px 16px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  color: #fff8f2;
+  background:
+    radial-gradient(
+      ellipse at 100% 65%,
+      rgb(236 100 38 / 48%),
+      transparent 65%
+    ),
+    linear-gradient(
+      155deg,
+      rgb(99 39 19 / 94%),
+      rgb(99 39 19 / 78%)
+    );
+  border: 1px solid rgb(255 227 207 / 35%);
+  border-radius: 28px;
+  box-shadow:
+    inset 0 1px 1px rgb(255 255 255 / 20%),
+    0 16px 40px rgb(99 39 19 / 18%);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  transition: width 220ms ease;
+}
+
+.cita-sidebar__cabecera {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-height: 48px;
+  padding: 0 8px;
+}
+
+.cita-sidebar__marca {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  font-family: "Kanit", sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  background: var(--color-primary);
+  border: 1px solid rgb(255 255 255 / 25%);
+  border-radius: 14px;
+}
+
+.cita-sidebar__cabecera strong {
+  display: block;
+  font-family: "Kanit", sans-serif;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.cita-sidebar__cabecera small {
+  display: block;
+  margin-top: 6px;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: #fde3cf;
+}
+
+.cita-sidebar__texto {
+  min-width: 0;
+}
+
+.cita-sidebar__control {
+  display: grid;
+  place-items: center;
+  align-self: flex-end;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  margin: 18px 6px 0;
+  color: white;
+  background: rgb(255 255 255 / 9%);
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.cita-sidebar__seccion {
+  margin: 22px 12px 14px;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  color: #efd2bd;
+}
+
+.cita-sidebar__menu {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 8px;
+}
+
+.cita-sidebar__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  flex-shrink: 0;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  font: inherit;
+  font-size: 12px;
+  text-align: left;
+  color: #fff1e6;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.cita-sidebar__icono {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 24px;
+}
+
+.cita-sidebar__item:hover:not(:disabled) {
+  color: white;
+  background: rgb(255 255 255 / 10%);
+  border-color: rgb(255 255 255 / 12%);
+}
+
+.cita-sidebar__item--activo {
+  color: white;
+  background: linear-gradient(
+    90deg,
+    rgb(255 255 255 / 18%),
+    rgb(255 255 255 / 5%)
+  );
+  border-color: rgb(255 255 255 / 14%);
+}
+
+.cita-sidebar__item--activo::before {
+  position: absolute;
+  top: 11px;
+  bottom: 11px;
+  left: -8px;
+  width: 4px;
+  content: "";
+  background: var(--color-accent);
+  border-radius: 999px;
+  box-shadow: 0 0 12px rgb(248 169 31 / 50%);
+}
+
+.cita-sidebar__flecha {
+  margin-left: auto;
+  font-size: 23px;
+  line-height: 1;
+}
+
+.cita-sidebar__item:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.cita-sidebar__pie {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.cita-sidebar__cuenta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 20px 8px 4px;
+  border-top: 1px solid rgb(255 255 255 / 18%);
+}
+
+.cita-sidebar__avatar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-brown);
+  background: var(--color-cream);
+  border: 2px solid rgb(255 255 255 / 25%);
+  border-radius: 50%;
+}
+
+.cita-sidebar__cuenta strong {
+  display: block;
+  overflow: hidden;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cita-sidebar__cuenta small {
+  display: block;
+  margin-top: 4px;
+  font-size: 9px;
+  color: #efd2bd;
+}
+
+.cita-sidebar button:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* Menú contraído */
+
+.cita-sidebar--compacto {
+  width: 84px;
+}
+
+.cita-sidebar--compacto .cita-sidebar__texto {
+  display: none;
+}
+
+.cita-sidebar--compacto .cita-sidebar__cabecera,
+.cita-sidebar--compacto .cita-sidebar__cuenta {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.cita-sidebar--compacto .cita-sidebar__control {
+  align-self: center;
+}
+
+.cita-sidebar--compacto .cita-sidebar__menu {
+  margin-top: 24px;
+}
+
+.cita-sidebar--compacto .cita-sidebar__item {
+  justify-content: center;
+  padding: 12px 8px;
+}
+
+/* En pantallas pequeñas, navegación compacta */
+
+@media (max-width: 760px) {
+  .cita-sidebar {
+    top: 8px;
+    width: 72px;
+    height: calc(100dvh - 16px);
+    min-height: 0;
+    padding: 16px 8px;
+    border-radius: 22px;
+  }
+
+  .cita-sidebar .cita-sidebar__texto,
+  .cita-sidebar__control {
+    display: none;
+  }
+
+  .cita-sidebar__cabecera,
+  .cita-sidebar__cuenta {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .cita-sidebar__menu {
+    margin-top: 24px;
+  }
+
+  .cita-sidebar__item {
+    justify-content: center;
+    padding: 10px 6px;
+  }
+
+  .cita-sidebar__item--activo::before {
+    left: -5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cita-sidebar,
+  .cita-sidebar__item {
+    transition: none;
+  }
+}
+/* Marca expandida */
+
+.cita-sidebar__cabecera {
+  justify-content: center;
+  min-height: 70px;
+  padding: 0 8px;
+}
+
+.cita-sidebar__logotipo {
+  display: block;
+  width: 190px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.cita-sidebar__isotipo {
+  display: none;
+  width: 44px;
+  height: 58px;
+  object-fit: contain;
+}
+
+/* Marca contraída */
+
+.cita-sidebar--compacto .cita-sidebar__logotipo {
+  display: none;
+}
+
+.cita-sidebar--compacto .cita-sidebar__isotipo {
+  display: block;
+}
+
+/* En celular el sidebar también es compacto */
+
+@media (max-width: 760px) {
+  .cita-sidebar .cita-sidebar__logotipo {
+    display: none;
+  }
+
+  .cita-sidebar .cita-sidebar__isotipo {
+    display: block;
+    width: 38px;
+    height: 52px;
+  }
+}
+/* Sidebar claro con efecto de vidrio */
+
+.cita-sidebar {
+  color: var(--color-brown);
+  background:
+    radial-gradient(
+      ellipse at 100% 65%,
+      rgb(248 169 31 / 12%),
+      transparent 65%
+    ),
+    linear-gradient(
+      155deg,
+      rgb(255 255 255 / 90%),
+      rgb(253 227 207 / 75%)
+    );
+  border: 1px solid rgb(255 255 255 / 85%);
+  box-shadow:
+    inset 0 1px 1px rgb(255 255 255 / 95%),
+    0 16px 40px rgb(99 39 19 / 10%);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.cita-sidebar__control {
+  color: var(--color-brown);
+  background: rgb(255 255 255 / 65%);
+  border-color: rgb(99 39 19 / 12%);
+}
+
+.cita-sidebar__control:hover {
+  background: white;
+}
+
+.cita-sidebar__seccion {
+  color: #93614d;
+}
+
+.cita-sidebar__item {
+  color: var(--color-brown);
+}
+
+.cita-sidebar__item:hover:not(:disabled) {
+  color: var(--color-brown);
+  background: rgb(255 255 255 / 70%);
+  border-color: rgb(99 39 19 / 8%);
+}
+
+.cita-sidebar__item--activo {
+  color: var(--color-brown);
+  background: linear-gradient(
+    90deg,
+    rgb(236 100 38 / 15%),
+    rgb(248 169 31 / 8%)
+  );
+  border-color: rgb(236 100 38 / 18%);
+}
+
+.cita-sidebar__item--activo .cita-sidebar__icono,
+.cita-sidebar__flecha {
+  color: var(--color-primary);
+}
+
+.cita-sidebar__item--activo::before {
+  background: var(--color-primary);
+  box-shadow: 0 0 12px rgb(236 100 38 / 25%);
+}
+
+.cita-sidebar__cuenta {
+  border-top-color: rgb(99 39 19 / 12%);
+}
+
+.cita-sidebar__cuenta strong {
+  color: var(--color-brown);
+}
+
+.cita-sidebar__cuenta small {
+  color: #93614d;
+}
+
+.cita-sidebar__avatar {
+  color: var(--color-brown);
+  background: white;
+  border-color: rgb(236 100 38 / 20%);
+}
