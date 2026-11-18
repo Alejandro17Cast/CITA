@@ -1,0 +1,923 @@
+/* =====================================================
+   CITA — PAGOS, ABONOS, CANCELACIONES Y DEVOLUCIONES
+   Diseño alineado con el módulo Reservaciones
+===================================================== */
+
+.pagos {
+  box-sizing: border-box;
+  min-height: 0;
+  width: 100%;
+  min-width: 0;
+  padding: 18px clamp(16px, 2vw, 30px) 22px;
+  color: var(--color-brown);
+  background: #fff8f2;
+  font-family: inherit;
+}
+
+.pagos *,
+.pagos *::before,
+.pagos *::after {
+  box-sizing: border-box;
+}
+
+.pagos [hidden] {
+  display: none !important;
+}
+
+/* Encabezado */
+.pagos__page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.pagos__eyebrow {
+  display: block;
+  margin-bottom: 4px;
+  color: #84685b;
+  letter-spacing: 1.5px;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.pagos__page-header h1 {
+  margin: 3px 0;
+  color: var(--color-brown);
+  font-size: clamp(24px, 2.3vw, 30px);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.pagos__page-header p {
+  max-width: 720px;
+  margin: 6px 0;
+  color: #84685b;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Pestañas: mismo tratamiento que Reservaciones */
+.pagos__tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  border-bottom: 1px solid #ecd9ca;
+  margin: 0 0 14px;
+  padding: 0;
+}
+
+.pagos__tabs button,
+.pagos .pagos__tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 10px 15px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: var(--color-brown);
+  white-space: nowrap;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  box-shadow: none;
+}
+
+.pagos__tab span {
+  display: inline-grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  flex: 0 0 23px;
+  border-radius: 50%;
+  background: #f3e5da;
+  color: #765b4a;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.pagos__tabs button:hover:not(:disabled),
+.pagos .pagos__tab:hover:not(:disabled) {
+  border-color: transparent;
+  border-bottom-color: #d8b9a3;
+  background: #fff7f0;
+}
+
+.pagos__tabs button[aria-current="page"],
+.pagos .pagos__tab[aria-current="page"] {
+  border-bottom: 3px solid var(--color-primary);
+  border-radius: 0;
+  background: #fff0e2;
+  color: var(--color-brown);
+  font-weight: 600;
+}
+
+.pagos__tab[aria-current="page"] span {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+/* Paneles */
+.pagos__panel {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid #eeddd0;
+  border-radius: 14px;
+  background: var(--color-surface, #fff);
+  box-shadow: 0 3px 14px rgb(99 39 19 / 4%);
+}
+
+.pagos h2 {
+  margin: 0;
+  color: var(--color-brown);
+  font-size: 18px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.pagos p {
+  margin: 6px 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.pagos__selector {
+  margin-bottom: 14px;
+}
+
+.pagos__section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-bottom: 13px;
+}
+
+.pagos__section-heading > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagos__section-heading > p {
+  margin: 0;
+  color: #84685b;
+}
+
+.pagos__step {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Formularios */
+.pagos label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  color: var(--color-brown);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.pagos input,
+.pagos select,
+.pagos textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 38px;
+  padding: 8px 10px;
+  border: 1px solid #dec6b6;
+  border-radius: 8px;
+  background: #fffdfb;
+  color: var(--color-brown);
+  font: inherit;
+  font-size: 12px;
+}
+
+.pagos input::placeholder,
+.pagos textarea::placeholder {
+  color: #84685b;
+}
+
+.pagos select {
+  cursor: pointer;
+}
+
+.pagos textarea {
+  min-height: 68px;
+  max-height: 110px;
+  resize: vertical;
+}
+
+.pagos input:disabled,
+.pagos select:disabled,
+.pagos textarea:disabled {
+  background: #f7f2ee;
+  opacity: .75;
+}
+
+.pagos button {
+  min-height: 38px;
+  padding: 8px 13px;
+  border: 1px solid #dec6b6;
+  border-radius: 9px;
+  background: var(--color-surface, #fff);
+  color: var(--color-brown);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background .18s ease, border-color .18s ease;
+}
+
+.pagos button:hover:not(:disabled) {
+  background: #fff0e2;
+  border-color: #cda88f;
+}
+
+.pagos button:disabled {
+  opacity: .6;
+  cursor: default;
+}
+
+/* Distribución del resumen y formulario */
+.pagos__layout {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.35fr);
+  align-items: start;
+  gap: 14px;
+}
+
+.pagos__summary-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 9px;
+  background: #fff7f0;
+  color: #84685b;
+  font-size: 12px;
+}
+
+.pagos__badge {
+  display: inline-block;
+  border-radius: 24px;
+  padding: 5px 10px;
+  background: #fff0c9;
+  color: #632713;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.pagos__badge--confirmada,
+.pagos__badge--completada {
+  background: #e6f3e5;
+  color: #2f6637;
+}
+
+.pagos__badge--cancelada {
+  background: #fce5df;
+  color: #8a3020;
+}
+
+.pagos__amounts {
+  display: grid;
+  gap: 0;
+  margin: 12px 0;
+}
+
+.pagos__amounts > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 11px 2px;
+  border-bottom: 1px solid #f0e4da;
+  font-size: 12px;
+}
+
+.pagos__amounts dt {
+  color: #84685b;
+}
+
+.pagos__amounts dd {
+  margin: 0;
+  color: var(--color-brown);
+  font-weight: 650;
+  text-align: right;
+}
+
+.pagos__amounts .pagos__balance {
+  margin-top: 3px;
+  padding: 13px 11px;
+  border: 1px solid #f0d9c8;
+  border-radius: 9px;
+  background: #fff3e9;
+}
+
+.pagos__balance dd {
+  color: var(--color-primary);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.pagos__progress {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #f1e6de;
+}
+
+.pagos__progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--color-primary);
+  transition: width .25s ease;
+}
+
+.pagos__hint {
+  margin: 0 0 13px !important;
+  padding: 9px 11px;
+  border: 1px solid #f4ccad;
+  border-radius: 9px;
+  background: #fff0e2;
+  color: #76513d;
+  font-size: 12px !important;
+}
+
+.pagos fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.pagos fieldset:disabled {
+  opacity: .7;
+}
+
+.pagos__fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.pagos__wide {
+  grid-column: 1 / -1;
+}
+
+.pagos .pagos__primary {
+  width: 100%;
+  min-height: 40px;
+  margin-top: 10px;
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+}
+
+.pagos .pagos__primary:hover:not(:disabled) {
+  border-color: var(--color-accent, var(--color-primary));
+  background: var(--color-accent, var(--color-primary));
+}
+
+.pagos__secondary {
+  white-space: nowrap;
+}
+
+.pagos__layout-wide {
+  grid-column: 1 / -1;
+}
+
+.pagos__retry {
+  border-color: #f0d5a7;
+  background: #fffaf0;
+}
+
+/* Historial */
+.pagos__list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.pagos__table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #eeddd0;
+  border-radius: 10px;
+}
+
+.pagos table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 12px;
+}
+
+.pagos caption {
+  padding: 10px 12px;
+  color: #84685b;
+  text-align: left;
+}
+
+.pagos thead {
+  background: #fff0e2;
+}
+
+.pagos th,
+.pagos td {
+  padding: 11px;
+  border-bottom: 1px solid #eeddd0;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.pagos th {
+  color: #765b4a;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+}
+
+.pagos td {
+  color: #725b4e;
+}
+
+.pagos tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.pagos tbody tr:hover {
+  background: #fffaf6;
+}
+
+/* Secciones que contienen otros módulos */
+.pagos__management-section {
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.pagos__finance-section {
+  min-width: 0;
+  margin-top: 14px;
+}
+
+/* Mensajes */
+.pagos__message,
+.pagos__notice,
+.pagos__error {
+  padding: 10px 13px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+}
+
+.pagos__message {
+  border-color: #d6e9d9;
+  background: #e6f3e5;
+  color: #2f6637;
+}
+
+.pagos__notice {
+  border-color: #eeddd0;
+  background: #fff;
+  color: #84685b;
+}
+
+.pagos__error {
+  border-color: #f1d5cd;
+  background: #fff0ed;
+  color: #8a3020;
+}
+
+.pagos :is(input, select, textarea, button):focus-visible {
+  outline: 3px solid var(--color-brown);
+  outline-offset: 3px;
+}
+
+/* Responsive */
+@media (min-width: 1500px) {
+  .pagos__layout {
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.35fr);
+  }
+}
+
+@media (max-width: 1100px) {
+  .pagos__layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .pagos__panel {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 800px) {
+  .pagos__layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .pagos {
+    padding: 16px 14px 20px;
+  }
+
+  .pagos__fields {
+    grid-template-columns: 1fr;
+    gap: 11px;
+  }
+
+  .pagos__wide,
+  .pagos__layout-wide {
+    grid-column: auto;
+  }
+
+  .pagos__list-header {
+    align-items: flex-start;
+  }
+
+  .pagos__list-header button {
+    width: 100%;
+  }
+
+  .pagos__table-wrapper {
+    overflow-x: auto;
+  }
+
+  .pagos table {
+    min-width: 520px;
+  }
+
+  .pagos__panel {
+    padding: 15px;
+  }
+
+  .pagos__tabs {
+    gap: 0;
+  }
+
+  .pagos__tabs button,
+  .pagos .pagos__tab {
+    padding: 10px 12px;
+  }
+}
+
+
+/* ==========================================================
+   CITA — PAGOS | HISTORIAL AL LADO DEL RESUMEN
+   Aprovecha la columna izquierda sin alterar la lógica.
+========================================================== */
+
+@media (min-width: 801px) {
+  .pagos__layout {
+    grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+    grid-auto-flow: row;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .pagos__form-panel {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+  }
+
+  .pagos__summary {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    align-self: stretch;
+  }
+
+  /* Si existe formulario, el historial queda debajo de este,
+     mientras el resumen acompaña ambas filas a la derecha. */
+  .pagos__layout:has(.pagos__form-panel) .pagos__summary {
+    grid-row: 1 / span 2;
+  }
+
+  .pagos__layout:has(.pagos__form-panel) .pagos__history {
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: 0;
+    min-width: 0;
+  }
+
+  /* Cuando el saldo ya está pagado y no aparece el formulario,
+     el historial ocupa el espacio libre junto al resumen. */
+  .pagos__layout:not(:has(.pagos__form-panel)) .pagos__history {
+    grid-column: 1;
+    grid-row: 1;
+    margin-top: 0;
+    min-width: 0;
+  }
+
+  .pagos__history .pagos__table-wrapper {
+    width: 100%;
+  }
+}
+
+@media (max-width: 800px) {
+  .pagos__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pagos__layout .pagos__form-panel,
+  .pagos__layout .pagos__summary,
+  .pagos__layout .pagos__history {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+
+
+/* ==========================================================
+   CITA — PESTAÑAS DE PAGOS Y ABONOS
+   Referencia visual: pestañas de Reservaciones.
+========================================================== */
+
+.pagos__tabs {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  width: 100%;
+  min-height: 45px;
+  margin: 0 0 18px;
+  padding: 0 0 0;
+  overflow-x: auto;
+  border: 0;
+  border-bottom: 1px solid #ead8ca;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  scrollbar-width: thin;
+}
+
+.pagos__tabs button,
+.pagos .pagos__tab {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 45px;
+  margin: 0;
+  padding: 0 17px 3px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: #75432f;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: none;
+  transform: none;
+  transition: color .18s ease, background .18s ease, border-color .18s ease;
+}
+
+/* Sustituye los números por iconos discretos */
+.pagos__tabs button > span,
+.pagos .pagos__tab > span {
+  display: none;
+}
+
+.pagos__tabs button::before {
+  display: inline-block;
+  color: currentColor;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.pagos__tabs button:nth-child(1)::before {
+  content: "+";
+  font-size: 18px;
+}
+
+.pagos__tabs button:nth-child(2)::before {
+  content: "☷";
+  font-size: 14px;
+}
+
+.pagos__tabs button:hover:not(:disabled),
+.pagos .pagos__tab:hover:not(:disabled) {
+  border: 0;
+  border-bottom: 3px solid #e7b18e;
+  border-radius: 0;
+  background: #fff8f2;
+  color: #632713;
+  box-shadow: none;
+  transform: none;
+}
+
+.pagos__tabs button[aria-current="page"],
+.pagos .pagos__tab[aria-current="page"] {
+  border: 0;
+  border-bottom: 3px solid #f36b2b;
+  border-radius: 0;
+  background: #fff0e5;
+  color: #78351d;
+  font-weight: 650;
+  box-shadow: none;
+}
+
+.pagos__tabs button:focus-visible,
+.pagos .pagos__tab:focus-visible {
+  outline: 2px solid #e87943;
+  outline-offset: -3px;
+}
+
+@media (max-width: 600px) {
+  .pagos__tabs {
+    gap: 2px;
+    margin-bottom: 15px;
+  }
+
+  .pagos__tabs button,
+  .pagos .pagos__tab {
+    min-height: 43px;
+    padding-right: 13px;
+    padding-left: 13px;
+    font-size: 11px;
+  }
+}
+
+
+/* ==========================================================
+   CITA — RESUMEN DE RESERVA | ESTILO RESUMEN DE SOLICITUD
+========================================================== */
+
+.pagos__summary {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  gap: 0;
+  min-width: 0;
+  height: auto;
+  padding: 19px 18px 17px;
+  overflow: visible;
+  border: 1px solid #f0d9ca;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgb(99 39 19 / 5%);
+}
+
+/* Encabezado sencillo, sin el círculo numerado */
+.pagos__summary .pagos__section-heading {
+  margin: 0 0 12px;
+}
+
+.pagos__summary .pagos__section-heading > div {
+  gap: 0;
+}
+
+.pagos__summary .pagos__step {
+  display: none;
+}
+
+.pagos__summary h2 {
+  color: #632713;
+  font-size: 16px;
+  font-weight: 750;
+  letter-spacing: -.35px;
+  line-height: 1.3;
+}
+
+/* Estado como etiqueta compacta */
+.pagos__summary-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  min-height: 39px;
+  margin: 0 0 8px;
+  padding: 8px 0;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid #f0dfd4;
+  background: transparent;
+  color: #84685b;
+  font-size: 12px;
+}
+
+.pagos__summary-status > span {
+  color: #8a7164;
+}
+
+.pagos__summary-status .pagos__badge {
+  flex: 0 0 auto;
+  padding: 6px 11px;
+  border: 1px solid #f4dfbd;
+  border-radius: 20px;
+  background: #fff0ce;
+  color: #8a4a1d;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+/* Filas de importes como el resumen de la referencia */
+.pagos__summary .pagos__amounts {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+.pagos__summary .pagos__amounts > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  min-height: 42px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1e4dc;
+  font-size: 12px;
+}
+
+.pagos__summary .pagos__amounts dt {
+  color: #8a7164;
+  font-size: 12px;
+}
+
+.pagos__summary .pagos__amounts dd {
+  color: #632713;
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Saldo pendiente como total destacado */
+.pagos__summary .pagos__amounts .pagos__balance {
+  display: flex;
+  align-items: center;
+  margin: 5px 0 7px;
+  padding: 11px 0 9px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.pagos__summary .pagos__balance dt {
+  color: #632713;
+  font-size: 15px;
+  font-weight: 750;
+}
+
+.pagos__summary .pagos__balance dd {
+  color: #a83f1d;
+  font-size: clamp(20px, 2vw, 25px);
+  font-weight: 800;
+  letter-spacing: -.6px;
+}
+
+/* Barra de avance discreta al pie del resumen */
+.pagos__summary .pagos__progress {
+  height: 7px;
+  margin-top: 3px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #f4e8df;
+}
+
+.pagos__summary .pagos__progress span {
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f28a4d 0%, #ef6426 100%);
+  box-shadow: none;
+}
+
+@media (max-width: 800px) {
+  .pagos__summary {
+    align-self: stretch;
+    padding: 17px 16px;
+  }
+}
