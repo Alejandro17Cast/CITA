@@ -162,7 +162,7 @@ export default function EspaciosPage({ rol, onBack }: Props) {
   return (
     <main className="cita-espacios">
       <header className="cita-espacios__header">
-        <div><p className="cita-espacios__eyebrow">CITA · QUINTA ANFUSO</p><h1>Habitaciones y espacios</h1><p>Consultá las áreas, sus capacidades y tarifas.</p></div>
+        <div><h1>Habitaciones y espacios</h1><p>Consultá las áreas, sus capacidades y tarifas.</p></div>
         <button type="button" onClick={onBack} disabled={saving}>Volver al inicio</button>
       </header>
       <div className={`cita-espacios__layout${rol !== 'administrador' ? ' cita-espacios__layout--consulta' : ''}`}>
