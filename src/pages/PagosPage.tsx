@@ -45,7 +45,7 @@ const fecha = new Intl.DateTimeFormat('es-NI', {
   timeStyle: 'short',
 })
 
-export default function PagosPage({ rol, onBack }: Props) {
+export default function PagosPage({ onBack }: Props)  {
   const [reservas, setReservas] = useState<Reserva[]>([])
   const [pagos, setPagos] = useState<Pago[]>([])
   const [reservaId, setReservaId] = useState('')
