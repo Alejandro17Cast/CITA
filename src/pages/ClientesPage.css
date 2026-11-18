@@ -1,52 +1,125 @@
+
+.clientes,
+.cancelaciones {
+  --primary: #ec6426;
+  --primary-dark: #ce501d;
+  --brown: #632713;
+  --muted: #8b7164;
+  --cream: #fff5ec;
+  --border: #ecd9ca;
+  --surface: #ffffff;
+  --surface-soft: #fffaf6;
+  --shadow: 0 8px 25px rgb(99 39 19 / 6%);
+
+  font-family: "Poppins", sans-serif;
+  color: var(--brown);
+}
+
+/* =====================================================
+   CONTENEDOR PRINCIPAL
+===================================================== */
+
 .clientes {
   min-height: 100vh;
-  padding: 32px clamp(20px, 5vw, 64px);
-  background: #fff8f2;
+  padding: 32px clamp(18px, 4vw, 48px);
+
+  background:
+    radial-gradient(
+      ellipse at 5% 5%,
+      rgb(248 169 31 / 10%),
+      transparent 35%
+    ),
+    #fff8f2;
 }
+
+/* =====================================================
+   ENCABEZADOS
+===================================================== */
 
 .clientes__header,
 .clientes__list-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   gap: 20px;
   flex-wrap: wrap;
 }
 
 .clientes__header {
-  margin-bottom: 28px;
+  margin-bottom: 30px;
 }
 
 .clientes__eyebrow {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 9px;
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+
+  color: var(--primary);
 }
 
 .clientes h1 {
-  margin: 8px 0;
-  font-size: 36px;
+  margin: 0;
+
+  font-family: "Kanit", sans-serif;
+  font-size: clamp(30px, 4vw, 39px);
+  font-weight: 700;
+
+  letter-spacing: -0.7px;
+  color: var(--brown);
 }
 
 .clientes h2 {
   margin: 0 0 20px;
-  font-size: 24px;
+
+  font-family: "Kanit", sans-serif;
+  font-size: 23px;
+  font-weight: 600;
+
+  color: var(--brown);
 }
 
 .clientes p {
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--muted);
 }
+
+/* =====================================================
+   PANELES
+===================================================== */
 
 .clientes__panel {
   padding: 28px;
   margin-bottom: 24px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-cream);
-  border-radius: 18px;
+
+  background: linear-gradient(
+    145deg,
+    #ffffff,
+    #fffdfb
+  );
+
+  border: 1px solid var(--border);
+  border-radius: 20px;
+
+  box-shadow: var(--shadow);
+
+  transition: box-shadow 180ms ease;
 }
 
-.clientes fieldset {
+.clientes__panel:hover {
+  box-shadow:
+    0 12px 30px rgb(99 39 19 / 8%);
+}
+
+/* =====================================================
+   FORMULARIOS
+===================================================== */
+
+.clientes fieldset,
+.cancelaciones fieldset {
   min-width: 0;
   padding: 0;
   margin: 0;
@@ -56,289 +129,584 @@
 .clientes__fields {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
+  gap: 22px;
 }
 
-.clientes label {
+.clientes label,
+.cancelaciones label {
   display: grid;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 500;
+  gap: 9px;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  color: #70422f;
 }
 
 .clientes__wide {
   grid-column: 1 / -1;
 }
 
+/* =====================================================
+   CAMPOS CON PROFUNDIDAD
+===================================================== */
+
 .clientes input,
-.clientes textarea {
+.clientes textarea,
+.clientes select,
+.cancelaciones input,
+.cancelaciones textarea,
+.cancelaciones select {
   width: 100%;
   min-width: 0;
-  padding: 12px 14px;
-  color: var(--color-brown);
-  background: #fffaf6;
-  border: 1px solid #dac1b4;
-  border-radius: 10px;
+  min-height: 47px;
+
+  padding: 13px 15px;
+
+  font-family: inherit;
+  font-size: 12px;
+
+  color: var(--brown);
+
+  background: #faf6f2;
+
+  border: 1px solid #e8d6c8;
+  border-radius: 11px;
+
+  outline: none;
+
+  box-shadow:
+    inset 0 2px 5px rgb(99 39 19 / 5%),
+    inset 0 1px 2px rgb(99 39 19 / 3%),
+    0 1px 0 #ffffff;
+
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
-.clientes textarea {
+.clientes input::placeholder,
+.clientes textarea::placeholder,
+.cancelaciones input::placeholder,
+.cancelaciones textarea::placeholder {
+  color: #ad9586;
+}
+
+.clientes input:hover,
+.clientes textarea:hover,
+.clientes select:hover,
+.cancelaciones input:hover,
+.cancelaciones textarea:hover,
+.cancelaciones select:hover {
+  background: #fffaf6;
+  border-color: #d9b9a3;
+}
+
+.clientes input:focus,
+.clientes textarea:focus,
+.clientes select:focus,
+.cancelaciones input:focus,
+.cancelaciones textarea:focus,
+.cancelaciones select:focus {
+  background: #ffffff;
+  border-color: var(--primary);
+
+  box-shadow:
+    inset 0 1px 3px rgb(99 39 19 / 3%),
+    0 0 0 3px rgb(236 100 38 / 10%),
+    0 4px 12px rgb(99 39 19 / 5%);
+}
+
+.clientes textarea,
+.cancelaciones textarea {
+  min-height: 105px;
   resize: vertical;
 }
 
-.clientes button {
-  padding: 12px 18px;
-  color: var(--color-brown);
-  background: white;
-  border: 1px solid #dac1b4;
-  border-radius: 10px;
-  font-size: 13px;
-  font-weight: 500;
-}
+/* =====================================================
+   CHECKBOXES
+===================================================== */
 
-.clientes .clientes__primary {
-  margin-top: 24px;
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-  font-weight: 600;
-}
-
-.clientes button:disabled {
-  opacity: 0.6;
-  cursor: wait;
-}
-
-.clientes input:focus-visible,
-.clientes textarea:focus-visible,
-.clientes button:focus-visible {
-  outline: 3px solid var(--color-brown);
-  outline-offset: 3px;
-}
-
-.clientes__search {
-  max-width: 480px;
-  margin: 12px 0 24px;
-}
-
-.clientes__table-wrapper {
-  overflow-x: auto;
-}
-
-.clientes table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}
-
-.clientes caption {
-  text-align: left;
-  padding-bottom: 12px;
-}
-
-.clientes th,
-.clientes td {
-  padding: 14px;
-  text-align: left;
-  border-bottom: 1px solid var(--color-cream);
-  vertical-align: top;
-  overflow-wrap: anywhere;
-}
-
-.clientes th {
-  background: #fff8f2;
-}
-
-@media (max-width: 600px) {
-  .clientes__fields {
-    grid-template-columns: 1fr;
-  }
-
-  .clientes__panel {
-    padding: 20px;
-  }
-}
-.clientes select {
-  width: 100%;
-  min-width: 0;
-  padding: 12px 14px;
-  color: var(--color-brown);
-  background: #fffaf6;
-  border: 1px solid #dac1b4;
-  border-radius: 10px;
-}
-
-.clientes select:focus-visible {
-  outline: 3px solid var(--color-brown);
-  outline-offset: 3px;
-}
 .clientes .reservas__check {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.clientes .reservas__check input {
+.clientes .reservas__check input,
+.cancelaciones__confirmacion input {
   width: 18px;
   height: 18px;
+  min-height: auto;
+
   flex-shrink: 0;
-  accent-color: var(--color-brown);
+
+  padding: 0;
+
+  accent-color: var(--primary);
+
+  box-shadow: none;
 }
+
+/* =====================================================
+   ESPACIOS DE RESERVACIÓN
+===================================================== */
 
 .reservas__espacio {
   display: grid;
   gap: 16px;
-  padding: 18px;
-  border: 1px solid var(--color-cream);
-  border-radius: 12px;
+
+  padding: 20px;
+
+  background: #fffaf6;
+
+  border: 1px solid var(--border);
+  border-radius: 15px;
 }
+
+/* =====================================================
+   BOTONES
+===================================================== */
+
+.clientes button,
+.cancelaciones button {
+  min-height: 43px;
+  padding: 11px 18px;
+
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+
+  color: var(--brown);
+
+  background: #ffffff;
+
+  border: 1px solid var(--border);
+  border-radius: 11px;
+
+  box-shadow: 0 2px 5px rgb(99 39 19 / 3%);
+
+  cursor: pointer;
+
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.clientes button:hover:not(:disabled),
+.cancelaciones button:hover:not(:disabled) {
+  background: #fff2e8;
+  border-color: #e7b99c;
+  color: var(--primary-dark);
+
+  transform: translateY(-1px);
+}
+
+.clientes .clientes__primary,
+.cancelaciones .clientes__primary {
+  min-height: 47px;
+
+  padding: 13px 23px;
+  margin-top: 24px;
+
+  color: #ffffff;
+
+  background: linear-gradient(
+    110deg,
+    #ed6427,
+    #f5823e
+  );
+
+  border: none;
+
+  box-shadow:
+    0 7px 17px rgb(236 100 38 / 22%),
+    inset 0 1px 0 rgb(255 255 255 / 20%);
+}
+
+.clientes .clientes__primary:hover:not(:disabled),
+.cancelaciones .clientes__primary:hover:not(:disabled) {
+  color: #ffffff;
+
+  background: linear-gradient(
+    110deg,
+    #d9551c,
+    #ed7133
+  );
+
+  box-shadow:
+    0 10px 22px rgb(236 100 38 / 30%);
+}
+
+.clientes button:disabled,
+.cancelaciones button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  transform: none;
+}
+
+/* =====================================================
+   BUSCADOR
+===================================================== */
+
+.clientes__search {
+  width: 100%;
+  max-width: 480px;
+  margin: 12px 0 24px;
+}
+
+.clientes__search input {
+  min-height: 49px;
+  padding-left: 17px;
+
+  background: #ffffff;
+
+  border-radius: 13px;
+
+  box-shadow:
+    inset 0 2px 4px rgb(99 39 19 / 3%),
+    0 3px 10px rgb(99 39 19 / 3%);
+}
+
+/* =====================================================
+   TABLA DE CLIENTES
+===================================================== */
+
+.clientes__table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+
+  border: 1px solid var(--border);
+  border-radius: 15px;
+
+  background: #ffffff;
+}
+
+.clientes table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+
+  font-size: 11px;
+}
+
+.clientes caption {
+  padding: 15px;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  text-align: left;
+  color: var(--muted);
+}
+
+.clientes th,
+.clientes td {
+  padding: 16px 15px;
+
+  text-align: left;
+  vertical-align: middle;
+
+  border-bottom: 1px solid #f2e8e0;
+
+  overflow-wrap: anywhere;
+}
+
+.clientes th {
+  font-size: 10px;
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  color: #846657;
+
+  background: #fff5ed;
+}
+
+.clientes td {
+  color: #725344;
+  line-height: 1.7;
+}
+
+.clientes tbody tr {
+  transition: background 150ms ease;
+}
+
+.clientes tbody tr:hover {
+  background: #fffaf6;
+}
+
+.clientes tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* =====================================================
+   CANCELACIONES
+===================================================== */
+
 .cancelaciones {
-  padding: 0 28px 28px;
-  background: #f6eee7;
-  color: var(--color-brown);
+  padding: 25px 28px 30px;
+
+  background: #ffffff;
+
+  border: 1px solid var(--border);
+  border-radius: 20px;
+
+  box-shadow: var(--shadow);
 }
 
 .cancelaciones h2 {
-  font-size: 24px;
+  margin: 0 0 12px;
+
+  font-family: "Kanit", sans-serif;
+  font-size: 23px;
+
+  color: var(--brown);
 }
 
 .cancelaciones p {
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.8;
-}
-
-.cancelaciones fieldset {
-  min-width: 0;
-  padding: 0;
-  margin: 0;
-  border: 0;
+  color: var(--muted);
 }
 
 .cancelaciones label {
-  display: grid;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.cancelaciones select,
-.cancelaciones textarea {
-  width: 100%;
-  padding: 12px 14px;
-  color: var(--color-brown);
-  background: #fffaf6;
-  border: 1px solid #dac1b4;
-  border-radius: 10px;
-}
-
-.cancelaciones textarea {
-  resize: vertical;
-}
-
-.cancelaciones button {
-  padding: 12px 18px;
-  color: var(--color-brown);
-  background: white;
-  border: 1px solid #dac1b4;
-  border-radius: 10px;
-  font-size: 13px;
+  margin-bottom: 15px;
 }
 
 .cancelaciones .clientes__primary {
-  background: var(--color-primary);
-  margin-top: 20px;
-  font-weight: 600;
+  margin-top: 12px;
 }
 
 .cancelaciones .cancelaciones__confirmacion {
   display: flex;
   align-items: center;
   gap: 10px;
+
   margin-top: 20px;
 }
 
 .cancelaciones__confirmacion input {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-  accent-color: var(--color-brown);
+  margin: 0;
 }
 
-.cancelaciones button:disabled {
-  opacity: 0.6;
-  cursor: default;
-}
-
-.cancelaciones select:focus-visible,
-.cancelaciones textarea:focus-visible,
-.cancelaciones input:focus-visible,
-.cancelaciones button:focus-visible {
-  outline: 3px solid var(--color-brown);
-  outline-offset: 3px;
-}
-
-.cancelaciones .clientes__table-wrapper {
-  overflow-x: auto;
-}
-
-@media (max-width: 800px) {
-  .cancelaciones {
-    padding: 0 16px 20px;
-  }
-}.cancelaciones input[type="number"] {
-  width: 100%;
-  padding: 12px 14px;
-  color: var(--color-brown);
-  background: #fffaf6;
-  border: 1px solid #dac1b4;
-  border-radius: 10px;
-}
-
-.cancelaciones input[type="number"]:focus-visible {
-  outline: 3px solid var(--color-brown);
-  outline-offset: 3px;
-}
+/* =====================================================
+   REEMBOLSOS
+===================================================== */
 
 .reembolso__resumen {
-  padding: 16px 20px;
+  padding: 19px 22px;
   margin: 20px 0;
-  background: var(--color-cream);
-  border-radius: 12px;
+
+  background: linear-gradient(
+    135deg,
+    #fff2e5,
+    #fff9f3
+  );
+
+  border: 1px solid #f0ddcc;
+  border-radius: 15px;
+
+  box-shadow:
+    inset 0 1px 3px rgb(99 39 19 / 3%);
 }
 
 .reembolso__resumen p {
-  margin: 6px 0;
+  margin: 7px 0;
+
+  font-size: 12px;
+  color: #815b47;
 }
+
+/* =====================================================
+   REPORTES
+===================================================== */
+
 .reportes__resumen {
   display: grid;
+
   grid-template-columns: repeat(3, minmax(0, 1fr));
+
   gap: 16px;
   margin: 24px 0;
 }
 
 .reportes__resumen article {
+  position: relative;
+
   min-width: 0;
-  padding: 22px;
-  background: #fff7ef;
-  border: 1px solid #ecd5c5;
-  border-radius: 20px;
+  padding: 23px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid var(--border);
+  border-radius: 18px;
+
+  box-shadow: var(--shadow);
+
+  transition: transform 180ms ease;
+}
+
+.reportes__resumen article:hover {
+  transform: translateY(-3px);
+}
+
+.reportes__resumen article::after {
+  content: "";
+
+  position: absolute;
+  top: -30px;
+  right: -30px;
+
+  width: 85px;
+  height: 85px;
+
+  background: rgb(236 100 38 / 6%);
+
+  border-radius: 50%;
 }
 
 .reportes__resumen h3 {
-  margin: 0 0 12px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #93614d;
+  margin: 0 0 14px;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  color: var(--muted);
 }
 
 .reportes__resumen strong {
+  position: relative;
+  z-index: 1;
+
   display: block;
+
   overflow-wrap: anywhere;
+
   font-family: "Kanit", sans-serif;
-  font-size: 28px;
-  color: var(--color-brown);
+  font-size: 29px;
+
+  color: var(--brown);
 }
 
-@media (max-width: 700px) {
+/* =====================================================
+   ACCESIBILIDAD
+===================================================== */
+
+.clientes input:focus-visible,
+.clientes textarea:focus-visible,
+.clientes select:focus-visible,
+.clientes button:focus-visible,
+.cancelaciones input:focus-visible,
+.cancelaciones textarea:focus-visible,
+.cancelaciones select:focus-visible,
+.cancelaciones button:focus-visible {
+  outline: 3px solid #f4a36d;
+  outline-offset: 3px;
+}
+
+/* =====================================================
+   TABLETS
+===================================================== */
+
+@media (max-width: 900px) {
+  .clientes {
+    padding: 25px 20px;
+  }
+
+  .clientes__panel {
+    padding: 23px;
+  }
+
+  .reportes__resumen {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =====================================================
+   MÓVILES
+===================================================== */
+
+@media (max-width: 600px) {
+  .clientes {
+    padding: 19px 13px;
+  }
+
+  .clientes__header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .clientes h1 {
+    font-size: 30px;
+  }
+
+  .clientes h2 {
+    font-size: 21px;
+  }
+
+  .clientes__panel {
+    padding: 19px 15px;
+    border-radius: 16px;
+  }
+
+  .clientes__fields {
+    grid-template-columns: 1fr;
+    gap: 17px;
+  }
+
+  .clientes__wide {
+    grid-column: auto;
+  }
+
+  .clientes__list-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .clientes__search {
+    max-width: none;
+  }
+
+  .clientes__table-wrapper table {
+    min-width: 570px;
+  }
+
+  .cancelaciones {
+    padding: 20px 15px;
+    border-radius: 16px;
+  }
+
   .reportes__resumen {
     grid-template-columns: 1fr;
+  }
+
+  .reportes__resumen article {
+    padding: 19px;
+  }
+
+  .clientes .clientes__primary,
+  .cancelaciones .clientes__primary {
+    width: 100%;
+  }
+}
+
+/* =====================================================
+   REDUCIR MOVIMIENTO
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .clientes *,
+  .cancelaciones *,
+  .reportes__resumen * {
+    transition: none !important;
+    animation: none !important;
   }
 }
