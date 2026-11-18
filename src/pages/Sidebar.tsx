@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './Sidebar.css'
 
 type Modulo<T extends string> = {
@@ -12,6 +11,8 @@ type Props<T extends string> = {
   nombre: string
   rol: 'administrador' | 'encargado'
   signingOut: boolean
+  expandido: boolean
+  onToggle: () => void
   onNavigate: (pagina: T) => void
   onSignOut: () => void
 }
@@ -92,11 +93,11 @@ export default function Sidebar<T extends string>({
   nombre,
   rol,
   signingOut,
+  expandido,
+  onToggle,
   onNavigate,
   onSignOut,
 }: Props<T>) {
-  const [expandido, setExpandido] = useState(true)
-
   return (
     <aside
       className={[
@@ -104,24 +105,26 @@ export default function Sidebar<T extends string>({
         expandido ? '' : 'cita-sidebar--compacto',
       ].join(' ')}
     >
+      {/* IDENTIDAD */}
       <div className="cita-sidebar__cabecera">
-  <img
-    className="cita-sidebar__isotipo"
-    src="/cita-identidad.png"
-    alt="CITA"
-  />
+        <img
+          className="cita-sidebar__isotipo"
+          src="/cita-identidad.png"
+          alt="CITA"
+        />
 
-  <img
-    className="cita-sidebar__logotipo"
-    src="/cita-logotipo.png"
-    alt="CITA · Quinta Anfuso"
-  />
-</div>
+        <img
+          className="cita-sidebar__logotipo"
+          src="/cita-logotipo.png"
+          alt="CITA · Quinta Anfuso"
+        />
+      </div>
 
+      {/* CONTROL DE EXPANSIÓN */}
       <button
         type="button"
         className="cita-sidebar__control"
-        onClick={() => setExpandido((value) => !value)}
+        onClick={onToggle}
         aria-expanded={expandido}
         aria-controls="cita-sidebar-menu"
         aria-label={expandido ? 'Contraer menú' : 'Expandir menú'}
@@ -137,14 +140,18 @@ export default function Sidebar<T extends string>({
           strokeLinecap="round"
           aria-hidden="true"
         >
-          <path d={expandido ? 'm14 6-6 6 6 6' : 'm10 6 6 6-6 6'} />
+          <path
+            d={expandido ? 'm14 6-6 6 6 6' : 'm10 6 6 6-6 6'}
+          />
         </svg>
       </button>
 
+      {/* SECCIÓN */}
       <p className="cita-sidebar__seccion cita-sidebar__texto">
         MENÚ PRINCIPAL
       </p>
 
+      {/* NAVEGACIÓN */}
       <nav
         id="cita-sidebar-menu"
         className="cita-sidebar__menu"
@@ -170,7 +177,9 @@ export default function Sidebar<T extends string>({
                   : `${modulo.nombre} · Próximamente`
               }
               onClick={() => {
-                if (modulo.pagina) onNavigate(modulo.pagina)
+                if (modulo.pagina) {
+                  onNavigate(modulo.pagina)
+                }
               }}
             >
               <span className="cita-sidebar__icono">
@@ -194,13 +203,18 @@ export default function Sidebar<T extends string>({
         })}
       </nav>
 
+      {/* PIE DEL SIDEBAR */}
       <div className="cita-sidebar__pie">
+
+        {/* CERRAR SESIÓN */}
         <button
           type="button"
           className="cita-sidebar__item"
           onClick={onSignOut}
           disabled={signingOut}
-          aria-label={signingOut ? 'Cerrando sesión' : 'Cerrar sesión'}
+          aria-label={
+            signingOut ? 'Cerrando sesión' : 'Cerrar sesión'
+          }
           title="Cerrar sesión"
         >
           <span className="cita-sidebar__icono">
@@ -224,6 +238,7 @@ export default function Sidebar<T extends string>({
           </span>
         </button>
 
+        {/* CUENTA */}
         <div
           className="cita-sidebar__cuenta"
           title={`${nombre || 'Usuario'} · ${rol}`}
@@ -234,8 +249,11 @@ export default function Sidebar<T extends string>({
 
           <div className="cita-sidebar__texto">
             <strong>{nombre || 'Usuario'}</strong>
+
             <small>
-              {rol === 'administrador' ? 'Administrador' : 'Encargado'}
+              {rol === 'administrador'
+                ? 'Administrador'
+                : 'Encargado'}
             </small>
           </div>
         </div>
