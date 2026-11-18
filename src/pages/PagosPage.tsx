@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import { supabase } from '../lib/supabase'
-import './ClientesPage.css'
+import GestionReservacionesPage from './GestionReservacionesPage'
+import './PagosPage.css'
 
 type Reserva = {
   id: string
@@ -29,6 +30,7 @@ type Solicitud = {
 }
 
 type Props = {
+  rol: 'administrador' | 'encargado'
   onBack: () => void
 }
 
@@ -43,7 +45,7 @@ const fecha = new Intl.DateTimeFormat('es-NI', {
   timeStyle: 'short',
 })
 
-export default function PagosPage({ onBack }: Props) {
+export default function PagosPage({ rol, onBack }: Props) {
   const [reservas, setReservas] = useState<Reserva[]>([])
   const [pagos, setPagos] = useState<Pago[]>([])
   const [reservaId, setReservaId] = useState('')
@@ -58,6 +60,7 @@ export default function PagosPage({ onBack }: Props) {
   const [message, setMessage] = useState('')
   const [reload, setReload] = useState(0)
   const [solicitud, setSolicitud] = useState<Solicitud | null>(null)
+  const [seccion, setSeccion] = useState<'pagos' | 'cancelaciones'>('pagos')
 
   useEffect(() => {
     let cancelled = false
@@ -192,37 +195,56 @@ export default function PagosPage({ onBack }: Props) {
   }
 
   return (
-    <main className="clientes">
-      <header className="clientes__header">
+    <main className="pagos">
+      <header className="pagos__page-header">
         <div>
-          <p className="clientes__eyebrow">CITA · QUINTA ANFUSO</p>
-          <h1>Pagos y abonos</h1>
-          <p>Consultá saldos y registrá pagos en córdobas.</p>
+          <span className="pagos__eyebrow">CITA / ADMINISTRACIÓN FINANCIERA</span>
+          <h1>Gestión financiera</h1>
+          <p>Administrá pagos, abonos, cancelaciones y devoluciones de las reservaciones.</p>
         </div>
-        <button
-          type="button"
-          disabled={saving || !!solicitud}
-          onClick={onBack}
-        >
-          Volver al inicio
-        </button>
       </header>
 
-      {message && <p role="status">{message}</p>}
+      <nav className="pagos__tabs" aria-label="Secciones de gestión financiera">
+        <button
+          type="button"
+          className={seccion === 'pagos' ? 'pagos__tab pagos__tab--active' : 'pagos__tab'}
+          aria-current={seccion === 'pagos' ? 'page' : undefined}
+          onClick={() => setSeccion('pagos')}
+        >
+          <span>01</span>
+          Pagos y abonos
+        </button>
+        <button
+          type="button"
+          className={seccion === 'cancelaciones' ? 'pagos__tab pagos__tab--active' : 'pagos__tab'}
+          aria-current={seccion === 'cancelaciones' ? 'page' : undefined}
+          onClick={() => setSeccion('cancelaciones')}
+        >
+          <span>02</span>
+          Cancelaciones y devoluciones
+        </button>
+      </nav>
+
+      {seccion === 'pagos' ? (
+        <>
+            {message && <p className="pagos__message" role="status">{message}</p>}
 
       {loading ? (
-        <p role="status">Cargando pagos…</p>
+        <p className="pagos__notice" role="status">Cargando pagos…</p>
       ) : loadError ? (
-        <section className="clientes__panel">
-          <p role="alert">{loadError}</p>
-          <button type="button" onClick={() => setReload((v) => v + 1)}>
+        <section className="pagos__panel">
+          <p className="pagos__error" role="alert">{loadError}</p>
+          <button className="pagos__secondary" type="button" onClick={() => setReload((v) => v + 1)}>
             Actualizar datos
           </button>
         </section>
       ) : (
         <>
-          <section className="clientes__panel">
-            <h2>Seleccioná una reservación</h2>
+          <section className="pagos__panel pagos__selector">
+            <div className="pagos__section-heading">
+              <div><span className="pagos__step">01</span><h2>Seleccioná una reservación</h2></div>
+              <p>Elegí la reserva para consultar su estado de cuenta.</p>
+            </div>
             <label>
               Reservación
               <select
@@ -250,29 +272,20 @@ export default function PagosPage({ onBack }: Props) {
           </section>
 
           {reserva && (
-            <>
-              <section className="clientes__panel">
-                <h2>Resumen de la reserva</h2>
-                <p>Estado: <strong>{reserva.estado}</strong></p>
-                <p>Total: <strong>{moneda.format(reserva.total)}</strong></p>
-                <p>Pagado: <strong>{moneda.format(pagadoCentavos / 100)}</strong></p>
-                <p>Saldo pendiente: <strong>{moneda.format(saldoCentavos / 100)}</strong></p>
-              </section>
-
+            <div className="pagos__layout">
               {reserva.estado !== 'cancelada' && saldoCentavos > 0 && (
-                <section className="clientes__panel">
-                  <h2>Registrar pago</h2>
+                <section className="pagos__panel pagos__form-panel">
+                  <div className="pagos__section-heading">
+                    <div><span className="pagos__step">03</span><h2>Registrar pago</h2></div>
+                  </div>
 
                   {reserva.estado === 'pendiente' && (
-                    <p>
-                      El primer anticipo confirmará esta reserva y bloqueará
-                      sus espacios si siguen disponibles.
-                    </p>
+                    <p className="pagos__hint">El primer anticipo confirmará esta reserva y bloqueará sus espacios si siguen disponibles.</p>
                   )}
 
                   <form onSubmit={registrarPago}>
                     <fieldset disabled={saving || !!solicitud}>
-                      <div className="clientes__fields">
+                      <div className="pagos__fields">
                         <label>
                           Monto en córdobas
                           <input
@@ -307,7 +320,7 @@ export default function PagosPage({ onBack }: Props) {
                           />
                         </label>
 
-                        <label className="clientes__wide">
+                        <label className="pagos__wide">
                           Observaciones (opcional)
                           <textarea
                             rows={3}
@@ -320,7 +333,7 @@ export default function PagosPage({ onBack }: Props) {
                         </label>
                       </div>
 
-                      <button type="submit" className="clientes__primary">
+                      <button type="submit" className="pagos__primary">
                         {saving ? 'Registrando…' : 'Registrar pago recibido'}
                       </button>
                     </fieldset>
@@ -328,16 +341,38 @@ export default function PagosPage({ onBack }: Props) {
                 </section>
               )}
 
-              {formError && <p role="alert">{formError}</p>}
+
+              <section className="pagos__panel pagos__summary">
+                <div className="pagos__section-heading">
+                  <div><span className="pagos__step">02</span><h2>Resumen de la reserva</h2></div>
+                </div>
+                <div className="pagos__summary-status">
+                  <span>Estado de la reservación</span>
+                  <strong className={`pagos__badge pagos__badge--${reserva.estado}`}>
+                    {reserva.estado}
+                  </strong>
+                </div>
+                <dl className="pagos__amounts">
+                  <div><dt>Total de la reserva</dt><dd>{moneda.format(reserva.total)}</dd></div>
+                  <div><dt>Total pagado</dt><dd>{moneda.format(pagadoCentavos / 100)}</dd></div>
+                  <div className="pagos__balance"><dt>Saldo pendiente</dt><dd>{moneda.format(saldoCentavos / 100)}</dd></div>
+                </dl>
+                <div className="pagos__progress" aria-label={`Pagado ${Math.min(100, Math.max(0, (pagadoCentavos / Math.max(1, Math.round(Number(reserva.total) * 100))) * 100)).toFixed(0)} por ciento`}>
+                  <span style={{ width: `${Math.min(100, Math.max(0, (pagadoCentavos / Math.max(1, Math.round(Number(reserva.total) * 100))) * 100))}%` }} />
+                </div>
+              </section>
+
+              {formError && <p className="pagos__error pagos__layout-wide" role="alert">{formError}</p>}
 
               {solicitud && !saving && (
-                <section className="clientes__panel">
+                <section className="pagos__panel pagos__retry pagos__layout-wide">
                   <p>
                     Hay una operación sin resultado confirmado.
                     Este reintento conserva el mismo identificador para evitar
                     duplicar el pago. Mantené esta página abierta.
                   </p>
                   <button
+                    className="pagos__secondary"
                     type="button"
                     onClick={() => void enviarPago(solicitud)}
                   >
@@ -346,10 +381,11 @@ export default function PagosPage({ onBack }: Props) {
                 </section>
               )}
 
-              <section className="clientes__panel">
-                <div className="clientes__list-header">
+              <section className="pagos__panel pagos__history pagos__layout-wide">
+                <div className="pagos__list-header">
                   <h2>Historial de pagos</h2>
                   <button
+                    className="pagos__secondary"
                     type="button"
                     disabled={saving || !!solicitud}
                     onClick={() => setReload((value) => value + 1)}
@@ -361,7 +397,7 @@ export default function PagosPage({ onBack }: Props) {
                 {historial.length === 0 ? (
                   <p>Esta reserva todavía no tiene pagos registrados.</p>
                 ) : (
-                  <div className="clientes__table-wrapper">
+                  <div className="pagos__table-wrapper">
                     <table>
                       <caption>Pagos de {reserva.nombre_evento}</caption>
                       <thead>
@@ -386,8 +422,17 @@ export default function PagosPage({ onBack }: Props) {
                   </div>
                 )}
               </section>
-            </>
+            </div>
           )}
+        </>
+      )}
+        </>
+      ) : (
+        <>
+          <section className="pagos__management-section">
+            <GestionReservacionesPage onBack={onBack} soloGestion />
+          </section>
+
         </>
       )}
     </main>
