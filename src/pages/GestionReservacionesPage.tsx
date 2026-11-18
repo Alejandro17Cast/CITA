@@ -350,7 +350,7 @@ export default function GestionReservacionesPage({
           <p role="alert">{loadError}</p>
         ) : (
           <>
-            <div hidden={vista !== "decision"}>
+            <div className="cita-gestion__decision" hidden={vista !== "decision"}>
               <form onSubmit={cancelarReserva}>
                 <fieldset disabled={saving} className="cita-reservas__layout">
                   <div className="cita-reservas__panel">
@@ -610,8 +610,8 @@ export default function GestionReservacionesPage({
               </form>
             </div>
             <section
-              className="cita-reservas__panel"
-              hidden={vista !== "historial"}
+  className="cita-reservas__panel cita-gestion__historial"
+  hidden={vista !== "historial"}
               aria-labelledby="historial-titulo"
             >
               <div className="cita-reservas__header">
