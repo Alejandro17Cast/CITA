@@ -239,8 +239,16 @@ export default function FinanzasPanel({
     <section className="finanzas">
       <div className="finanzas__heading">
         <div>
-          <h3>Movimiento de dinero</h3>
-          <p>Mes {mesActual} · Córdobas · Hora de Nicaragua</p>
+          <h3>
+            {permitirEntrega
+              ? 'Entrega y seguimiento de devoluciones'
+              : 'Movimiento de dinero'}
+          </h3>
+          <p>
+            {permitirEntrega
+              ? 'Registrá las devoluciones autorizadas y consultá las entregas realizadas.'
+              : `Mes ${mesActual} · Córdobas · Hora de Nicaragua`}
+          </p>
         </div>
 
         <button
