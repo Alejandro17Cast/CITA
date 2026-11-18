@@ -296,7 +296,7 @@ export default function ReservacionesPage({
     <main className="cita-reservas">
       <header className="cita-reservas__header">
         <div>
-          <p className="cita-reservas__eyebrow">CITA · QUINTA ANFUSO</p>
+          
           <h1>Reservaciones</h1>
           <p>Organizá las solicitudes y los espacios de Quinta Anfuso.</p>
         </div>
