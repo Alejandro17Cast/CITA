@@ -1,139 +1,257 @@
+/* =====================================================
+   CITA — PANEL FINANCIERO / ENTREGA DE DEVOLUCIONES
+   Estilo unificado con Pagos y Reservaciones
+===================================================== */
+
 .finanzas {
-  margin-bottom: 24px;
-  color: var(--color-brown);
+  min-width: 0;
+  margin: 0;
+  color: var(--color-brown, #632713);
+  font-family: inherit;
 }
+
+.finanzas *,
+.finanzas *::before,
+.finanzas *::after { box-sizing: border-box; }
 
 .finanzas__heading {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  gap: 12px;
+  margin: 0 0 14px;
 }
 
-.finanzas h3 {
-  margin: 0 0 10px;
-  font-size: 22px;
+.finanzas__heading h3 {
+  margin: 0;
+  color: var(--color-brown, #632713);
+  font-size: 18px;
+  line-height: 1.35;
+  font-weight: 650;
 }
 
 .finanzas p {
-  font-size: 12px;
-  line-height: 1.8;
+  margin: 6px 0;
+  color: #84685b;
+  font-size: 11px;
+  line-height: 1.55;
 }
 
+.finanzas__heading button,
+.finanzas button {
+  min-height: 38px;
+  padding: 8px 13px;
+  color: var(--color-brown, #632713);
+  background: #fff;
+  border: 1px solid #dec6b6;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .18s ease, border-color .18s ease;
+}
+
+.finanzas button:hover:not(:disabled) {
+  background: #fff0e2;
+  border-color: #cda88f;
+}
+
+.finanzas button:disabled {
+  opacity: .6;
+  cursor: default;
+}
+
+/* Tarjetas de indicadores */
 .finanzas__cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .finanzas__cards article,
 .finanzas__panel {
-  padding: 22px;
-  background: white;
-  border: 1px solid #eddfd5;
-  border-radius: 20px;
+  min-width: 0;
+  padding: 17px;
+  background: #fff;
+  border: 1px solid #eeddd0;
+  border-radius: 14px;
+  box-shadow: 0 3px 14px rgb(99 39 19 / 4%);
 }
 
 .finanzas__cards h4 {
-  margin: 0 0 16px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
+  margin: 0 0 12px;
+  color: #84685b;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
 .finanzas__cards strong {
   display: block;
-  font-size: 25px;
+  color: var(--color-brown, #632713);
+  font-size: clamp(17px, 1.8vw, 23px);
+  font-weight: 700;
   overflow-wrap: anywhere;
 }
 
 .finanzas__cards .finanzas__neto {
-  background: var(--color-brown);
-  color: white;
+  background: var(--color-brown, #632713);
+  border-color: var(--color-brown, #632713);
+  color: #fff;
 }
 
+.finanzas__cards .finanzas__neto h4,
+.finanzas__cards .finanzas__neto strong,
+.finanzas__cards .finanzas__neto p { color: #fff; }
+
+/* Paneles de registrar y consultar devoluciones */
 .finanzas__panel {
-  margin-top: 22px;
+  margin-top: 14px;
+}
+
+.finanzas__panel h3 {
+  margin: 0 0 8px;
+  color: var(--color-brown, #632713);
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 650;
 }
 
 .finanzas fieldset {
-  padding: 0;
-  margin: 0;
   min-width: 0;
-  border: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 .finanzas label {
   display: grid;
-  gap: 8px;
-  margin: 16px 0;
-  font-size: 13px;
+  gap: 6px;
+  margin: 12px 0;
+  color: var(--color-brown, #632713);
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .finanzas input,
 .finanzas select {
   width: 100%;
-  padding: 12px;
-  background: #fffaf6;
-  color: var(--color-brown);
-  border: 1px solid #dac1b4;
-  border-radius: 10px;
+  min-width: 0;
+  min-height: 38px;
+  padding: 8px 10px;
+  color: var(--color-brown, #632713);
+  background: #fffdfb;
+  border: 1px solid #dec6b6;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 11px;
 }
 
-.finanzas button {
-  padding: 10px 16px;
-  color: var(--color-brown);
-  background: var(--color-cream);
-  border: 1px solid #dac1b4;
-  border-radius: 10px;
-  font-size: 12px;
-}
-
-.finanzas button:disabled {
-  opacity: 0.6;
-  cursor: default;
-}
+.finanzas input:disabled,
+.finanzas select:disabled { background: #f7f2ee; opacity: .75; }
 
 .finanzas .finanzas__check {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 13px 0;
+  color: #84685b;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
-.finanzas__check input {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
+.finanzas .finanzas__check input {
+  width: 17px;
+  height: 17px;
+  min-height: 17px;
+  flex: 0 0 17px;
+  margin: 1px 0 0;
+  accent-color: var(--color-primary, #ec6426);
+}
+
+.finanzas form button[type="submit"] {
+  width: 100%;
+  min-height: 40px;
+  color: #fff;
+  background: var(--color-primary, #ec6426);
+  border-color: var(--color-primary, #ec6426);
+}
+
+.finanzas form button[type="submit"]:hover:not(:disabled) {
+  filter: brightness(.96);
 }
 
 .finanzas input:focus-visible,
 .finanzas select:focus-visible,
 .finanzas button:focus-visible {
-  outline: 3px solid var(--color-brown);
-  outline-offset: 3px;
+  outline: 3px solid rgb(99 39 19 / 35%);
+  outline-offset: 2px;
 }
 
+/* Historial de entregas */
 .finanzas__table {
+  width: 100%;
   overflow-x: auto;
+  border: 1px solid #eeddd0;
+  border-radius: 10px;
 }
 
 .finanzas table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12px;
-}
-
-.finanzas th,
-.finanzas td {
-  padding: 14px;
+  font-size: 11px;
   text-align: left;
-  border-bottom: 1px solid var(--color-cream);
 }
 
 .finanzas caption {
+  padding: 10px 12px;
+  color: #84685b;
+  font-size: 10px;
   text-align: left;
-  padding: 12px 0;
+}
+
+.finanzas thead { background: #fff0e2; }
+
+.finanzas th,
+.finanzas td {
+  padding: 11px;
+  text-align: left;
+  border-bottom: 1px solid #eeddd0;
+  white-space: nowrap;
+}
+
+.finanzas th {
+  color: #765b4a;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+}
+
+.finanzas td { color: #725b4e; }
+.finanzas tbody tr:last-child td { border-bottom: 0; }
+.finanzas tbody tr:hover { background: #fffaf6; }
+
+.finanzas [role="alert"],
+.finanzas [role="status"] {
+  padding: 10px 12px;
+  border: 1px solid #eeddd0;
+  border-radius: 9px;
+  background: #fff;
   font-size: 11px;
+}
+
+@media (max-width: 1050px) {
+  .finanzas__cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 600px) {
+  .finanzas__cards { grid-template-columns: 1fr; }
+  .finanzas__heading { align-items: flex-start; }
+  .finanzas__heading button { width: 100%; }
+  .finanzas__panel { padding: 15px; }
 }
