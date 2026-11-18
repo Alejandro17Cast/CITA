@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import ClientesPage from './ClientesPage'
 import EspaciosPage from './EspaciosPage'
 import ReservacionesPage from './ReservacionesPage'
-import GestionReservacionesPage from './GestionReservacionesPage'
 import PagosPage from './PagosPage'
 import CalendarioPage from './CalendarioPage'
 import FinanzasPanel from './FinanzasPanel'
@@ -101,7 +100,7 @@ export default function DashboardPage({
   onSignOut,
 }: Props) {
   const [page, setPage] = useState<Page>('inicio')
-  const [seccionPagos, setSeccionPagos] = useState<'pagos' | 'cancelaciones'>('pagos')
+  const [sidebarExpandido, setSidebarExpandido] = useState(true)
   const [resumen, setResumen] = useState<Resumen | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -294,7 +293,6 @@ export default function DashboardPage({
 
   function navegar(pagina: Page) {
     if (pagina === 'inicio') setLoading(true)
-    if (pagina === 'pagos') setSeccionPagos('pagos')
     setPage(pagina)
   }
 
@@ -323,16 +321,23 @@ export default function DashboardPage({
   }
 
   return (
-    <div className="dashboard">
+    <div
+      className={[
+        'dashboard',
+        sidebarExpandido ? '' : 'dashboard--sidebar-compacto',
+      ].join(' ')}
+    >
       <Sidebar
-  modulos={modulos}
-  paginaActual={page}
-  nombre={nombre}
-  rol={rol}
-  signingOut={signingOut}
-  onNavigate={navegar}
-  onSignOut={onSignOut}
-/>
+        modulos={modulos}
+        paginaActual={page}
+        nombre={nombre}
+        rol={rol}
+        signingOut={signingOut}
+        onNavigate={navegar}
+        onSignOut={onSignOut}
+        expandido={sidebarExpandido}
+        onToggle={() => setSidebarExpandido((value) => !value)}
+      />
 
       <div className="dashboard__workspace">
         {message && (
@@ -352,62 +357,7 @@ export default function DashboardPage({
         )}
 
         {page === 'pagos' && (
-          <>
-            <section className="dashboard__payments">
-              <header className="dashboard__payments-header">
-                <div>
-                  <p className="dashboard__eyebrow">GESTIÓN FINANCIERA</p>
-                  <h2>Pagos y abonos</h2>
-                  <p>Administrá los movimientos económicos de las reservaciones.</p>
-                </div>
-              </header>
-
-              <nav
-                className="dashboard__payments-tabs"
-                aria-label="Gestión financiera"
-              >
-                <button
-                  type="button"
-                  className={
-                    seccionPagos === 'pagos'
-                      ? 'dashboard__payments-tab dashboard__payments-tab--active'
-                      : 'dashboard__payments-tab'
-                  }
-                  aria-current={seccionPagos === 'pagos' ? 'page' : undefined}
-                  onClick={() => setSeccionPagos('pagos')}
-                >
-                  Pagos y abonos
-                </button>
-
-                <button
-                  type="button"
-                  className={
-                    seccionPagos === 'cancelaciones'
-                      ? 'dashboard__payments-tab dashboard__payments-tab--active'
-                      : 'dashboard__payments-tab'
-                  }
-                  aria-current={
-                    seccionPagos === 'cancelaciones' ? 'page' : undefined
-                  }
-                  onClick={() => setSeccionPagos('cancelaciones')}
-                >
-                  Cancelaciones y devoluciones
-                </button>
-              </nav>
-            </section>
-
-            {seccionPagos === 'pagos' ? (
-              <PagosPage onBack={volver} />
-            ) : (
-              <GestionReservacionesPage onBack={volver} soloGestion />
-            )}
-
-            {rol === 'administrador' && (
-              <div style={{ padding: '0 28px 28px' }}>
-                <FinanzasPanel permitirEntrega />
-              </div>
-            )}
-          </>
+          <PagosPage onBack={volver} rol={'administrador'} />
         )}
         {page === 'reportes' && rol === 'administrador' && (
   <ReportesPage onBack={volver} />
@@ -426,7 +376,7 @@ export default function DashboardPage({
           <main className="dashboard__main">
             <header className="dashboard__header">
               <div>
-                <p className="dashboard__eyebrow">QUINTA ANFUSO</p>
+               
                 <h2>Panel de administración</h2>
                 <p>Bienvenido, {nombre || 'usuario'}.</p>
               </div>
