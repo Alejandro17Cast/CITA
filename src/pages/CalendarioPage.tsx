@@ -150,7 +150,8 @@ export default function CalendarioPage({ onBack, onNuevaReservacion }: Props) {
   return (
     <main className="calendario">
       <header className="calendario__header">
-        <div><p className="calendario__eyebrow">CITA · QUINTA ANFUSO</p><h1>Calendario</h1><p>Reservaciones y disponibilidad · Hora de Nicaragua</p></div>
+        <div>
+        <h1>Calendario</h1><p>Reservaciones y disponibilidad · Hora de Nicaragua</p></div>
         <div className="calendario__controls">{onNuevaReservacion && <button type="button" className="calendario__primary" onClick={onNuevaReservacion}>＋ Nueva reservación</button>}<button type="button" onClick={onBack}>Volver al inicio</button></div>
       </header>
       <div className="calendario__toolbar">
