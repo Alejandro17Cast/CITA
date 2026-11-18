@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import ClientesPage from './ClientesPage'
 import EspaciosPage from './EspaciosPage'
-import ReservacionesPage from './GestionReservacionesPage'
+import ReservacionesPage from './ReservacionesPage'
+import GestionReservacionesPage from './GestionReservacionesPage'
 import PagosPage from './PagosPage'
 import CalendarioPage from './CalendarioPage'
 import FinanzasPanel from './FinanzasPanel'
@@ -100,6 +101,7 @@ export default function DashboardPage({
   onSignOut,
 }: Props) {
   const [page, setPage] = useState<Page>('inicio')
+  const [seccionPagos, setSeccionPagos] = useState<'pagos' | 'cancelaciones'>('pagos')
   const [resumen, setResumen] = useState<Resumen | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -292,6 +294,7 @@ export default function DashboardPage({
 
   function navegar(pagina: Page) {
     if (pagina === 'inicio') setLoading(true)
+    if (pagina === 'pagos') setSeccionPagos('pagos')
     setPage(pagina)
   }
 
@@ -350,7 +353,54 @@ export default function DashboardPage({
 
         {page === 'pagos' && (
           <>
-            <PagosPage onBack={volver} />
+            <section className="dashboard__payments">
+              <header className="dashboard__payments-header">
+                <div>
+                  <p className="dashboard__eyebrow">GESTIÓN FINANCIERA</p>
+                  <h2>Pagos y abonos</h2>
+                  <p>Administrá los movimientos económicos de las reservaciones.</p>
+                </div>
+              </header>
+
+              <nav
+                className="dashboard__payments-tabs"
+                aria-label="Gestión financiera"
+              >
+                <button
+                  type="button"
+                  className={
+                    seccionPagos === 'pagos'
+                      ? 'dashboard__payments-tab dashboard__payments-tab--active'
+                      : 'dashboard__payments-tab'
+                  }
+                  aria-current={seccionPagos === 'pagos' ? 'page' : undefined}
+                  onClick={() => setSeccionPagos('pagos')}
+                >
+                  Pagos y abonos
+                </button>
+
+                <button
+                  type="button"
+                  className={
+                    seccionPagos === 'cancelaciones'
+                      ? 'dashboard__payments-tab dashboard__payments-tab--active'
+                      : 'dashboard__payments-tab'
+                  }
+                  aria-current={
+                    seccionPagos === 'cancelaciones' ? 'page' : undefined
+                  }
+                  onClick={() => setSeccionPagos('cancelaciones')}
+                >
+                  Cancelaciones y devoluciones
+                </button>
+              </nav>
+            </section>
+
+            {seccionPagos === 'pagos' ? (
+              <PagosPage onBack={volver} />
+            ) : (
+              <GestionReservacionesPage onBack={volver} soloGestion />
+            )}
 
             {rol === 'administrador' && (
               <div style={{ padding: '0 28px 28px' }}>
